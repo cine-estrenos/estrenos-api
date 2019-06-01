@@ -1,0 +1,19 @@
+{
+  "name": "estrenos-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:cine-estrenos/estrenos-api.git",
+  "author": "lndgalante <lndgalante@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "fastify": "^2.4.1",
+    "got": "^9.6.0",
+    "node-cron": "^2.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "scripts": {
+    "dev": "nodemon server.js"
+  }
+}
