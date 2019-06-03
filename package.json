@@ -14,6 +14,8 @@
     "nodemon": "^1.19.1"
   },
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "test": "echo 0",
+    "lint": "echo 0"
   }
 }

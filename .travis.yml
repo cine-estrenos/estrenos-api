@@ -1,6 +1,12 @@
+language: node_js
 node:
   - latest
-  - 10
+  - 8
+
+script:
+  - npm test
+  - npm lint
+
 matrix:
   allow_failures:
     - node: latest
