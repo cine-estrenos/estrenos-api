@@ -4,8 +4,8 @@ node_js:
   - 11
 
 script:
-  - npm test
-  - npm lint
+  - npm run test
+  - npm run lint
 
 matrix:
   allow_failures:
