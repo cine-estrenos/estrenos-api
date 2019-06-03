@@ -4,6 +4,13 @@
   "main": "index.js",
   "repository": "git@github.com:cine-estrenos/estrenos-api.git",
   "author": "lndgalante <lndgalante@gmail.com>",
+  "contributors": [
+    {
+      "name": "Hugo Farji",
+      "email": "hugo.farji@gmail.com",
+      "url": "https://hugo.farji.me"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "camelcase-keys": "^5.2.0",
