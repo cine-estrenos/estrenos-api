@@ -14,11 +14,18 @@
   },
   "devDependencies": {
     "@types/node": "^12.0.4",
+    "husky": "^2.3.0",
     "nodemon": "^1.19.1"
   },
   "scripts": {
     "dev": "nodemon server.js",
     "test": "echo 0",
     "lint": "echo 0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run lint && npm run test"
+    }
   }
 }
