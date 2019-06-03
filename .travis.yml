@@ -1,0 +1,6 @@
+node:
+  - latest
+  - 10
+matrix:
+  allow_failures:
+    - node: latest
