@@ -10,3 +10,6 @@ script:
 matrix:
   allow_failures:
     - node: latest
+
+notifications:
+  email: false
