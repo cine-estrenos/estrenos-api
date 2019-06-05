@@ -15,7 +15,7 @@ getCinemarkData().then(({ data }) => {
 
 // Run a cron every five minutes to get data from Cinemark Official API parsed and save it to Redis
 const task = cron.schedule('*/5 * * * *', async () => {
-  const { data, error } = await getCinemarkData()
+  const { data } = await getCinemarkData()
   if (data) data.forEach(([key, value]) => fastify.redis.set(key, JSON.stringify(value)))
 })
 
