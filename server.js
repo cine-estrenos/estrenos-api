@@ -1,10 +1,12 @@
-const fastify = require('fastify')({ logger: true })
+const Fastify = require('fastify')
+const fastifyRedis = require('fastify-redis')
 const cron = require('node-cron')
 
 const { getCinemarkData } = require('./utils/lib')
 
 // Register Redis into Fastify
-fastify.register(require('fastify-redis'), { host: '127.0.0.1' })
+const fastify = Fastify({ logger: true })
+fastify.register(fastifyRedis, { host: '127.0.0.1' })
 
 // Run it once at the server start
 getCinemarkData().then(({ data }) => {
