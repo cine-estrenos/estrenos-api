@@ -2,7 +2,7 @@ const Fastify = require('fastify')
 const fastifyRedis = require('fastify-redis')
 const cron = require('node-cron')
 
-const { getCinemarkData } = require('./utils/lib')
+const getCinemarkData = require('./utils/lib')
 
 // Register Redis into Fastify
 const fastify = Fastify({ logger: true })
