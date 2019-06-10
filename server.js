@@ -2,23 +2,26 @@ const Fastify = require('fastify')
 const fastifyRedis = require('fastify-redis')
 const cron = require('node-cron')
 
-const { getCinemarkData } = require('./utils/lib')
+const getCinemarkData = require('./utils')
 
 // Register Redis into Fastify
 const fastify = Fastify({ logger: true })
 fastify.register(fastifyRedis, { host: '127.0.0.1' })
 
-// Run it once at the server start
-getCinemarkData().then(({ data }) => {
-  if (data) data.forEach(([key, value]) => fastify.redis.set(key, JSON.stringify(value)))
-})
-
-// Run a cron every five minutes to get data from Cinemark Official API parsed and save it to Redis
-const task = cron.schedule('*/5 * * * *', async () => {
+// Get cinemark data and save it to Redis
+const saveCinemarkDataToRedis = async () => {
   const { data } = await getCinemarkData()
   if (data) data.forEach(([key, value]) => fastify.redis.set(key, JSON.stringify(value)))
-})
+}
 
+// Run it once at the server start
+saveCinemarkDataToRedis()
+
+// Run a cron every five minutes
+const task = cron.schedule('*/5 * * * *',  () => saveCinemarkDataToRedis())
+
+
+// Fastify endpoints
 fastify.get('/', async (request, reply) => {
   const timestamp = await fastify.redis.get('timeStamp')
   const timestampParsed = JSON.parse(timestamp)
@@ -40,7 +43,8 @@ fastify.get('/films', async (request, reply) => {
   return filmsParsed
 })
 
-const start = async () => {
+// Main function
+const main = async () => {
   try {
     await fastify.listen(3000)
     fastify.log.info(`server listening on ${fastify.server.address().port}`)
@@ -50,4 +54,4 @@ const start = async () => {
   }
 }
 
-start()
+main()
