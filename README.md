@@ -2,18 +2,23 @@
 
 # Estrenos API built with Fastify
 
-#
+## Enviroment variables
 
-# Tests
+- MOVIEDB_APIKEY=
+  You can get it from https://api.themoviedb.org
 
-# Pre-commit & pre-push
+## Tests
+
+## Pre-commit & pre-push
+
 We are currently using [Husky](https://github.com/typicode/husky) for our pre-commit & pre-push scripts.
 
 This tool should set 2 scripts:
-  - pre-commit: This script runs right after you do a commit and it permits you to commit only if `npm run lint` passes
-  - pre-push: This script runs right after you do a push and it permits you to push only if `npm run lint && npm run test` passes.
 
-These scripts can be bypassed if you use the ` --no-verify` argument, for example:
+- pre-commit: This script runs right after you do a commit and it permits you to commit only if `npm run lint` passes
+- pre-push: This script runs right after you do a push and it permits you to push only if `npm run lint && npm run test` passes.
+
+These scripts can be bypassed if you use the `--no-verify` argument, for example:
 
 ```bash
 git add .
