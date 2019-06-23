@@ -27,3 +27,7 @@ git push origin some-branch --no-verify
 ```
 
 Anyways, is not recommended to bypass the git hooks just because you can, they are here to protect us from non-intentional mistakes at pushing non-working code
+
+## Mock
+
+A mock response with the official response: http://cinemark-data.free.beeceptor.com
