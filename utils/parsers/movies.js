@@ -1,7 +1,7 @@
-const got = require('got')
 const titleize = require('titleize')
 
-const { emojifier } = require('../lib')
+const { parseShows } = require('./shows')
+const { getImdbInfo, emojifier } = require('../lib')
 
 const parseMovies = async movies => {
   // Remove special or festival movies
@@ -16,31 +16,48 @@ const parseMovies = async movies => {
         rating,
         description,
         duration,
-        category,
         urlPoster,
         urlTrailerAmazon,
         urlTrailerYoutube,
         personList,
         cinemaList,
         attributeList,
+        movieList,
+        category: mCategory,
       } = premiere
 
+      const title = titleize(name)
+      const minAge = rating.split(' ')[0]
+
+      const length = `${duration} minutos`
+      const inCinemas = cinemaList.sort((a, b) => a - b)
+
+      const isPremiere = attributeList.includes(0)
+      const categoryParsed = { value: mCategory, emoji: emojifier(mCategory) }
+
+      const amazonTrailerUrl = urlTrailerAmazon
+      const [, youtubeTrailerUrl] = urlTrailerYoutube.split('.be/')
+
+      const cast = parseCast(personList)
+      const shows = parseShows(movieList)
+
+      const poster = urlPoster
+      const category = categoryParsed
+
       const movie = {
-        name: titleize(name),
-        minAge: rating.split(' ')[0],
-        duration: `${duration} minutos`,
-        category: {
-          value: category,
-          emoji: emojifier(category),
-        },
         id,
+        cast,
+        shows,
+        title,
+        minAge,
+        length,
+        poster,
+        category,
+        inCinemas,
+        isPremiere,
         description,
-        poster: urlPoster,
-        inCinemas: cinemaList,
-        amazonTrailerUrl: urlTrailerAmazon,
-        youtubeTrailerUrl: urlTrailerYoutube.split('.be/')[1],
-        isPremiere: attributeList.includes(0),
-        cast: getDirectorsAndActors(personList),
+        amazonTrailerUrl,
+        youtubeTrailerUrl,
       }
 
       return movie
@@ -62,45 +79,23 @@ const parseMovies = async movies => {
   return moviesWithHighQualityPoster
 }
 
-const getDirectorsAndActors = cast => {
-  return cast.reduce(
-    (cast, { Type, Name }) => {
-      if (Type === 'D') {
+const parseCast = cast => {
+  const directorsAndActors = cast.reduce(
+    (cast, { type, name }) => {
+      if (type === 'D') {
         cast.directors.push(name)
         return cast
       }
 
-      if (Type === 'A') {
+      if (type === 'A') {
         cast.actors.push(name)
         return cast
       }
     },
     { directors: [], actors: [] }
   )
-}
 
-const getImdbInfo = async title => {
-  const currentYear = new Date().getFullYear()
-
-  const apiKey = process.env.MOVIEDB_APIKEY
-  const baseUrl = 'https://api.themoviedb.org/3/search/movie'
-  const options = `&page=1&include_adult=false&year=${currentYear}`
-  const endpoint = `${baseUrl}?api_key=${apiKey}&query=${encodeURI(title)}${options}`
-
-  const { body } = await got(endpoint)
-  const data = JSON.parse(body)
-  if (data.total_results === 0 || data.total_results > 1) return
-
-  const [movie] = data.results
-  const { title: name, vote_average: votes, poster_path: posterPath } = movie
-
-  const baseImageUrl = 'https://image.tmdb.org/t/p'
-  const withWidth = width => `w${width}`
-
-  const poster = `${baseImageUrl}/${withWidth(300)}/${posterPath}`
-  const votesParsed = String(votes).length === 1 ? `${votes}.0` : `${votes}`
-
-  return { name, votes: votesParsed, poster }
+  return directorsAndActors
 }
 
 module.exports = parseMovies
