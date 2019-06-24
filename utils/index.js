@@ -1,7 +1,7 @@
 const got = require('got')
 const camelcaseKeys = require('camelcase-keys')
 
-const parseCinemas = require('./cinemas')
+const { parseCinemas, parseMovies } = require('./parsers')
 
 const getCinemarkData = async () => {
   try {
@@ -10,7 +10,7 @@ const getCinemarkData = async () => {
     const dataInCamelCase = camelcaseKeys(data, { deep: true })
 
     const parsedData = {
-      ...dataInCamelCase,
+      movies: await parseMovies(dataInCamelCase.films),
       cinemas: parseCinemas(dataInCamelCase.cinemas),
     }
 

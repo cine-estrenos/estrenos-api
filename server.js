@@ -1,8 +1,12 @@
 const Fastify = require('fastify')
 const fastifyRedis = require('fastify-redis')
 const cron = require('node-cron')
+const dotenv = require('dotenv')
 
 const getCinemarkData = require('./utils')
+
+// Load enviroment variables
+dotenv.config()
 
 // Register Redis into Fastify
 const fastify = Fastify({ logger: true })
@@ -10,7 +14,7 @@ fastify.register(fastifyRedis, { host: '127.0.0.1' })
 
 // Get cinemark data and save it to Redis
 const saveCinemarkDataToRedis = async () => {
-  const { data } = await getCinemarkData()
+  const { data, error } = await getCinemarkData()
   if (data) data.forEach(([key, value]) => fastify.redis.set(key, JSON.stringify(value)))
 }
 
@@ -18,8 +22,7 @@ const saveCinemarkDataToRedis = async () => {
 saveCinemarkDataToRedis()
 
 // Run a cron every five minutes
-const task = cron.schedule('*/5 * * * *',  () => saveCinemarkDataToRedis())
-
+const task = cron.schedule('*/5 * * * *', () => saveCinemarkDataToRedis())
 
 // Fastify endpoints
 fastify.get('/', async (request, reply) => {
@@ -29,6 +32,7 @@ fastify.get('/', async (request, reply) => {
   return timestampParsed
 })
 
+// Cinemas endpoint
 fastify.get('/cinemas', async (request, reply) => {
   const cinemas = await fastify.redis.get('cinemas')
   const cinemasParsed = JSON.parse(cinemas)
@@ -36,17 +40,18 @@ fastify.get('/cinemas', async (request, reply) => {
   return cinemasParsed
 })
 
-fastify.get('/films', async (request, reply) => {
-  const films = await fastify.redis.get('films')
-  const filmsParsed = JSON.parse(films)
+// Movies endpoint
+fastify.get('/movies', async (request, reply) => {
+  const movies = await fastify.redis.get('movies')
+  const moviesParsed = JSON.parse(movies)
 
-  return filmsParsed
+  return moviesParsed
 })
 
 // Main function
 const main = async () => {
   try {
-    await fastify.listen(3000)
+    await fastify.listen(process.env.PORT || 3000)
     fastify.log.info(`server listening on ${fastify.server.address().port}`)
   } catch (err) {
     fastify.log.error(err)
