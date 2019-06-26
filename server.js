@@ -15,6 +15,7 @@ fastify.register(fastifyRedis, { host: '127.0.0.1' })
 // Get cinemark data and save it to Redis
 const saveCinemarkDataToRedis = async () => {
   const { data, error } = await getCinemarkData()
+  if (error) console.error(error)
   if (data) data.forEach(([key, value]) => fastify.redis.set(key, JSON.stringify(value)))
 }
 
@@ -42,10 +43,21 @@ fastify.get('/cinemas', async (request, reply) => {
 
 // Movies endpoint
 fastify.get('/movies', async (request, reply) => {
+  const moviesWithoutShows = await fastify.redis.get('moviesWithoutShows')
+  const movies = JSON.parse(moviesWithoutShows)
+
+  return movies
+})
+
+// Movie endpoint
+fastify.get('/movies/:id', async (request, reply) => {
   const movies = await fastify.redis.get('movies')
   const moviesParsed = JSON.parse(movies)
 
-  return moviesParsed
+  const { id: movieId } = request.params
+  const movie = moviesParsed.find(({ id }) => id === movieId)
+
+  return movie ? reply.send(movie) : reply.code(404).send('No movie found')
 })
 
 // Main function
