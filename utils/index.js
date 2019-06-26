@@ -22,4 +22,4 @@ const getCinemarkData = async () => {
   }
 }
 
-module.exports = getCinemarkData
+module.exports = { getCinemarkData }

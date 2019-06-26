@@ -5,7 +5,7 @@ const parseCinemas = cinemas => {
     const { id, description, name, address, features, decLatitude, decLongitude, urlGoogleMaps, buses } = cinema
 
     return {
-      id,
+      id: String(id),
       description,
       name: parseCinemaName(name),
       coordinates: {

@@ -30,7 +30,7 @@ const parseMovies = async movies => {
       const minAge = rating.split(' ')[0]
 
       const length = `${duration} minutos`
-      const inCinemas = cinemaList.sort((a, b) => a - b)
+      const inCinemas = cinemaList.sort((a, b) => a - b).map(String)
 
       const isPremiere = attributeList.includes(0)
       const categoryParsed = { value: mCategory, emoji: emojifier(mCategory) }
