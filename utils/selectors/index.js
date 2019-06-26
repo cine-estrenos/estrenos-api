@@ -11,7 +11,15 @@ getShowsByMovieIdAndCinemaId = (movies, movieId, cinemaId) => {
   const showsPerMovie = getShowsByMovieId(movies, movieId)
   if (!showsPerMovie) return null
 
-  const showsPerCinema = showsPerMovie.find(({ cinemaId: id }) => id === cinemaId)
+  const showsPerCinema = showsPerMovie
+    .filter(({ cinemaWithShows }) => cinemaWithShows.hasOwnProperty(cinemaId))
+    .map(shows => {
+      const { cinemaWithShows } = shows
+      const cinemaInShows = cinemaWithShows[cinemaId]
+
+      return { ...shows, cinemaWithShows: { [cinemaId]: cinemaInShows } }
+    })
+
   return showsPerCinema
 }
 

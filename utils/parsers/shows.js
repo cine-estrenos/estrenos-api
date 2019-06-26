@@ -5,24 +5,25 @@ require('dayjs/locale/es')
 dayjs.locale('es')
 
 const parseShows = movieList => {
-  const [showsParsed] = movieList.map(({ format, version, cinemaList }) => {
-    const cinemaWithShows = cinemaList.map(({ id: cinemaId, sessionList }) => {
-      const shows = sessionList.map(({ id: sessionId, feature: featureId, dtm: timestamp }) => ({
+  const showsParsed = movieList.map(({ id: formatId, format, version, cinemaList }) => {
+    const cinemaWithShows = cinemaList.reduce((acc, { id: cinemaId, sessionList }) => {
+      const shows = sessionList.map(({ id: sessionId, feature: featureId, dtm: timestamp, seats }) => ({
+        seats,
         timestamp,
         date: titleize(dayjs(timestamp).format('dddd D [de] MMMM')),
         time: dayjs(timestamp).format('HH[:]mm'),
         link: createTicketsLink(cinemaId, sessionId, featureId),
-        format: format.toUpperCase(),
-        version: titleize(version),
       }))
 
-      return { cinemaId: String(cinemaId), shows }
-    })
+      acc[cinemaId] = shows
 
-    return cinemaWithShows
+      return acc
+    }, {})
+
+    return { formatId, format: titleize(format), version: titleize(version), cinemaWithShows }
   })
 
-  return showsParsed.flat()
+  return showsParsed
 }
 
 const createTicketsLink = (cinemaId, sessionId, featureId) => {
