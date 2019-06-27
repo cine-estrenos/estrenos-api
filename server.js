@@ -1,37 +1,34 @@
 const dotenv = require('dotenv')
-const Fastify = require('fastify')
-const fastifyRedis = require('fastify-redis')
+
+const client = require("./client")
 
 const { cinemarkCron } = require('./plugins/cinemark')
+
 const { getCinemas } = require('./controllers/cinemas')
-const { getMovie, getMovies } = require('./controllers/movies')
-const { getShowsByMovie, getShowsByCinema } = require('./controllers/shows')
+const { getMovieById, getMovies } = require('./controllers/movies')
+const { getShowsByMovieId, getShowsByMovieIdAndCinemaId } = require('./controllers/shows')
 
 // Load enviroment variables
 dotenv.config()
 
-// Create a fastify instance
-const fastify = Fastify({ logger: true })
-
 // Register redis and cron job
-fastify.register(fastifyRedis, { host: '127.0.0.1' })
-fastify.register(cinemarkCron)
+client.register(cinemarkCron)
 
 // Routes
-fastify.get('/cinemas', getCinemas(fastify))
-fastify.get('/movies', getMovies(fastify))
-fastify.get('/movies/:id', getMovie(fastify))
-fastify.get('/shows/:movieId', getShowsByMovie(fastify))
-fastify.get('/shows/:movieId/:cinemaId', getShowsByCinema(fastify))
+client.get('/cinemas', getCinemas)
+client.get('/movies', getMovies)
+client.get('/movies/:movieId', getMovieById)
+client.get('/shows/:movieId', getShowsByMovieId)
+client.get('/shows/:movieId/:cinemaId', getShowsByMovieIdAndCinemaId)
 
 // Main function
 const main = async () => {
   try {
-    await fastify.listen(process.env.PORT || 3000)
-    const { port } = fastify.server.address()
-    fastify.log.info(`Server running on ${port}`)
+    await client.listen(process.env.PORT || 3000)
+    const { port } = client.server.address()
+    client.log.info(`Server running on ${port}`)
   } catch (error) {
-    fastify.log.error(err)
+    client.log.error(err)
     process.exit(1)
   }
 }
