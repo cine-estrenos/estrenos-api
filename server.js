@@ -3,7 +3,8 @@ const fastifyRedis = require('fastify-redis')
 const cron = require('node-cron')
 const dotenv = require('dotenv')
 
-const getCinemarkData = require('./utils')
+const { getCinemarkData } = require('./utils')
+const { getMovieById, getShowsByMovieId, getShowsByMovieIdAndCinemaId } = require('./utils/selectors')
 
 // Load enviroment variables
 dotenv.config()
@@ -30,7 +31,7 @@ fastify.get('/', async (request, reply) => {
   const timestamp = await fastify.redis.get('timeStamp')
   const timestampParsed = JSON.parse(timestamp)
 
-  return timestampParsed
+  reply.send(timestampParsed)
 })
 
 // Cinemas endpoint
@@ -38,7 +39,7 @@ fastify.get('/cinemas', async (request, reply) => {
   const cinemas = await fastify.redis.get('cinemas')
   const cinemasParsed = JSON.parse(cinemas)
 
-  return cinemasParsed
+  reply.send(cinemasParsed)
 })
 
 // Movies endpoint
@@ -46,18 +47,40 @@ fastify.get('/movies', async (request, reply) => {
   const moviesWithoutShows = await fastify.redis.get('moviesWithoutShows')
   const movies = JSON.parse(moviesWithoutShows)
 
-  return movies
+  reply.send(movies)
 })
 
 // Movie endpoint
 fastify.get('/movies/:id', async (request, reply) => {
-  const movies = await fastify.redis.get('movies')
+  const movies = await fastify.redis.get('moviesWithoutShows')
   const moviesParsed = JSON.parse(movies)
 
   const { id: movieId } = request.params
-  const movie = moviesParsed.find(({ id }) => id === movieId)
+  const movie = getMovieById(moviesParsed, movieId)
 
   return movie ? reply.send(movie) : reply.code(404).send('No movie found')
+})
+
+// Shows per movie endpoint
+fastify.get('/shows/:movieId', async (request, reply) => {
+  const movies = await fastify.redis.get('movies')
+  const moviesParsed = JSON.parse(movies)
+
+  const { movieId } = request.params
+  const shows = getShowsByMovieId(moviesParsed, movieId)
+
+  return shows ? reply.send(shows) : reply.code(404).send('No shows found')
+})
+
+// Shows per movie and cinema endpoint
+fastify.get('/shows/:movieId/:cinemaId', async (request, reply) => {
+  const movies = await fastify.redis.get('movies')
+  const moviesParsed = JSON.parse(movies)
+
+  const { movieId, cinemaId } = request.params
+  const shows = getShowsByMovieIdAndCinemaId(moviesParsed, movieId, cinemaId)
+
+  return shows ? reply.send(shows) : reply.code(404).send('No shows found')
 })
 
 // Main function
