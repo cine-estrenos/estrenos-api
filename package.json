@@ -29,11 +29,12 @@
     "@types/node": "^12.0.10",
     "@types/node-cron": "^2.0.2",
     "husky": "^2.4.1",
+    "jest": "^24.8.0",
     "nodemon": "^1.19.1"
   },
   "scripts": {
     "dev": "nodemon server.js",
-    "test": "echo 0",
+    "test": "jest",
     "lint": "echo 0"
   },
   "husky": {
