@@ -1,8 +1,11 @@
-const path = require('path')
 const dotenv = require('dotenv')
 const Fastify = require('fastify')
-const autoload = require('fastify-autoload')
 const fastifyRedis = require('fastify-redis')
+
+const { cinemarkCron } = require('./plugins/cinemark')
+const { getCinemas } = require('./controllers/cinemas')
+const { getMovie, getMovies } = require('./controllers/movies')
+const { getShowsByMovie, getShowsByCinema } = require('./controllers/shows')
 
 // Load enviroment variables
 dotenv.config()
@@ -10,10 +13,16 @@ dotenv.config()
 // Create a fastify instance
 const fastify = Fastify({ logger: true })
 
-// Register redis, plugins and controllers
+// Register redis and cron job
 fastify.register(fastifyRedis, { host: '127.0.0.1' })
-fastify.register(autoload, { dir: path.join(__dirname, 'plugins') })
-fastify.register(autoload, { dir: path.join(__dirname, 'controllers') })
+fastify.register(cinemarkCron)
+
+// Routes
+fastify.get('/cinemas', getCinemas(fastify))
+fastify.get('/movies', getMovies(fastify))
+fastify.get('/movies/:id', getMovie(fastify))
+fastify.get('/shows/:movieId', getShowsByMovie(fastify))
+fastify.get('/shows/:movieId/:cinemaId', getShowsByCinema(fastify))
 
 // Main function
 const main = async () => {
