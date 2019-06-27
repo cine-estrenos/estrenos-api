@@ -1,4 +1,4 @@
-const getMovieById = (movies, movieId) => movies.find(({ id }) => id === movieId)
+const {getMovieById} = require("./movies");
 
 const getShowsByMovieId = (movies, movieId) => {
   const movie = getMovieById(movies, movieId)
@@ -23,4 +23,4 @@ getShowsByMovieIdAndCinemaId = (movies, movieId, cinemaId) => {
   return showsPerCinema
 }
 
-module.exports = { getMovieById, getShowsByMovieId, getShowsByMovieIdAndCinemaId }
+module.exports = { getShowsByMovieId, getShowsByMovieIdAndCinemaId }

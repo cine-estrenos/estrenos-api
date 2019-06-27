@@ -1,6 +1,6 @@
 const client = require("../client");
 
-const { getMovieById } = require('../selectors')
+const { getMovieById } = require('../selectors/movies')
 
 exports.getMovies = async () => {
   const moviesWithoutShows = await client.redis.get('moviesWithoutShows')
