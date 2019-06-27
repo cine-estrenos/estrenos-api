@@ -15,5 +15,7 @@ module.exports = fp(function(fastify, opts, next) {
     cron.schedule('*/5 * * * *', () => saveCinemarkDataToRedis())
   })
 
+  fastify.getCinemarkData()
+
   next()
 })
