@@ -7,7 +7,7 @@ const getShowsByMovieId = (movies, movieId) => {
   return movie.shows;
 };
 
-getShowsByMovieIdAndCinemaId = (movies, movieId, cinemaId) => {
+const getShowsByMovieIdAndCinemaId = (movies, movieId, cinemaId) => {
   const showsPerMovie = getShowsByMovieId(movies, movieId);
   if (!showsPerMovie) return null;
 

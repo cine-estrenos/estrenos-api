@@ -1,11 +1,13 @@
 const mockClient = require("../utils/test/mockClient");
 
-const {getCinemas} = require("./cinemas");
+jest.mock("../client", () => mockClient);
 
-jest.mock("../client", () => mockClient([{id: "1", name: "movie"}]));
+const {getCinemas} = require("./cinemas");
 
 describe("Cinemas resolver", () => {
   it("getCinemas", async () => {
-    expect(await getCinemas()).toEqual([{id: "1", name: "movie"}]);
+    mockClient.mockGet([{id: "1", name: "cinema 1"}]);
+
+    expect(await getCinemas()).toEqual([{id: "1", name: "cinema 1"}]);
   });
 });
