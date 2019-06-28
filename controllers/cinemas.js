@@ -1,6 +1,3 @@
-exports.getCinemas = fastify => async () => {
-  const cinemas = await fastify.redis.get('cinemas')
-  const cinemasParsed = JSON.parse(cinemas)
+const {getCinemas} = require("../resolvers/cinemas");
 
-  return cinemasParsed
-}
+exports.getCinemas = getCinemas;
