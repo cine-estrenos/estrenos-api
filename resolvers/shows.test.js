@@ -2,9 +2,9 @@ const mockClient = require("../utils/test/mockClient");
 
 jest.mock("../client", () => mockClient);
 
-const {getShowsByMovieId} = require("./shows");
+const {getShowsByMovieId, getShowsByMovieIdAndCinemaId} = require("./shows");
 
-describe("Shows resolver", () => {
+describe("Shows resolvers", () => {
   it("getShowsByMovieId", async () => {
     mockClient.mockGet([
       {id: "1", name: "movie", shows: [{name: "pepe pompin"}]},
@@ -14,6 +14,16 @@ describe("Shows resolver", () => {
   });
 
   it("getShowsByMovieIdAndCinemaId", async () => {
-    // Should implement
+    mockClient.mockGet([
+      {
+        id: "1",
+        name: "movie",
+        shows: [{name: "pepe pompin", cinemaWithShows: {"2020": true}}],
+      },
+    ]);
+
+    expect(await getShowsByMovieIdAndCinemaId("1", "2020")).toEqual([
+      {name: "pepe pompin", cinemaWithShows: {"2020": true}},
+    ]);
   });
 });

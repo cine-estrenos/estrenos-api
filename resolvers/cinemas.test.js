@@ -4,7 +4,7 @@ jest.mock("../client", () => mockClient);
 
 const {getCinemas} = require("./cinemas");
 
-describe("Cinemas resolver", () => {
+describe("Cinemas resolvers", () => {
   it("getCinemas", async () => {
     mockClient.mockGet([{id: "1", name: "cinema 1"}]);
 
