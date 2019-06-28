@@ -1,18 +1,9 @@
-const { getMovieById } = require('../selectors')
+const { getMovies, getMovieById } = require('../resolvers/movies')
 
-exports.getMovies = fastify => async (request, reply) => {
-  const moviesWithoutShows = await fastify.redis.get('moviesWithoutShows')
-  const movies = JSON.parse(moviesWithoutShows)
+exports.getMovies = getMovies;
 
-  reply.send(movies)
-}
-
-exports.getMovie = fastify => async (request, reply) => {
-  const movies = await fastify.redis.get('moviesWithoutShows')
-  const moviesParsed = JSON.parse(movies)
-
-  const { id: movieId } = request.params
-  const movie = getMovieById(moviesParsed, movieId)
+exports.getMovieById = async (request, reply) => {
+  const movie = await getMovieById(moviesParsed, request.params.movieId);
 
   return movie ? reply.send(movie) : reply.code(404).send('No movie found')
 }
