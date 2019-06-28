@@ -1,5 +1,26 @@
 const titleize = require("titleize");
 
+const parseCinemaName = (name = "") => {
+  const fixedNames = {
+    "Hoyts Moron": "Hoyts Morón",
+    "Hoyts Nuevocentro": "Hoyts Nuevo Centro",
+    "Cinemark Tortugas": "Cinemark Tortuguitas",
+    "Cinemark Neuquen": "Cinemark Neuquén",
+  };
+
+  return fixedNames[name] || name;
+};
+
+const parseCinemaFeatures = (features = []) =>
+  features
+    .split("|")
+    .map((value, index) =>
+      index === 0 ? titleize(value) : value.replace("Y", "y")
+    )
+    .join("|");
+
+const parseBuses = (buses = "") => buses.split(" / ").filter(Boolean);
+
 const parseCinemas = cinemas => {
   const parsedCinemas = cinemas.map(cinema => {
     const {
@@ -35,27 +56,5 @@ const parseCinemas = cinemas => {
 
   return parsedCinemas;
 };
-
-const parseCinemaName = (name = "") => {
-  const fixedNames = {
-    "Hoyts Moron": "Hoyts Morón",
-    "Hoyts Nuevocentro": "Hoyts Nuevo Centro",
-    "Cinemark Tortugas": "Cinemark Tortuguitas",
-    "Hoyts Moron": "Hoyts Morón",
-    "Cinemark Neuquen": "Cinemark Neuquén",
-  };
-
-  return fixedNames[name] || name;
-};
-
-const parseCinemaFeatures = (features = []) =>
-  features
-    .split("|")
-    .map((value, index) =>
-      index === 0 ? titleize(value) : value.replace("Y", "y")
-    )
-    .join("|");
-
-const parseBuses = (buses = "") => buses.split(" / ").filter(Boolean);
 
 module.exports = parseCinemas;

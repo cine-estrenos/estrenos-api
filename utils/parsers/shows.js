@@ -5,6 +5,11 @@ require("dayjs/locale/es");
 
 dayjs.locale("es");
 
+const createTicketsLink = (cinemaId, sessionId, featureId) => {
+  const baseUrl = "https://tickets.cinemarkhoyts.com.ar/NSTicketing";
+  return `${baseUrl}/?CinemaId=${cinemaId}&SessionId=${sessionId}&FeatureId=${featureId}`;
+};
+
 const parseShows = movieList => {
   const showsParsed = movieList.map(
     ({id: formatId, format, version, cinemaList}) => {
@@ -37,11 +42,6 @@ const parseShows = movieList => {
   );
 
   return showsParsed;
-};
-
-const createTicketsLink = (cinemaId, sessionId, featureId) => {
-  const baseUrl = "https://tickets.cinemarkhoyts.com.ar/NSTicketing";
-  return `${baseUrl}/?CinemaId=${cinemaId}&SessionId=${sessionId}&FeatureId=${featureId}`;
 };
 
 module.exports = {parseShows};

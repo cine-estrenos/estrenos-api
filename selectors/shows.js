@@ -12,7 +12,7 @@ const getShowsByMovieIdAndCinemaId = (movies, movieId, cinemaId) => {
   if (!showsPerMovie) return null;
 
   const showsPerCinema = showsPerMovie
-    .filter(({cinemaWithShows}) => cinemaWithShows.hasOwnProperty(cinemaId))
+    .filter(({cinemaWithShows}) => cinemaWithShows.hasOwnProperty(cinemaId)) //eslint-disable-line
     .map(shows => {
       const {cinemaWithShows} = shows;
       const cinemaInShows = cinemaWithShows[cinemaId];

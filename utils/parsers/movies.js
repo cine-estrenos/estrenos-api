@@ -3,6 +3,27 @@ const titleize = require("titleize");
 const {parseShows} = require("./shows");
 const {getImdbInfo, emojifier} = require("../lib");
 
+const parseCast = cast => {
+  const directorsAndActors = cast.reduce(
+    (acc, {type, name}) => {
+      if (type === "D") {
+        acc.directors.push(name);
+        return acc;
+      }
+
+      if (type === "A") {
+        acc.actors.push(name);
+        return acc;
+      }
+
+      return acc;
+    },
+    {directors: [], actors: []}
+  );
+
+  return directorsAndActors;
+};
+
 const parseMovies = async movies => {
   // Remove special or festival movies
   const premieres = movies.filter(
@@ -80,25 +101,6 @@ const parseMovies = async movies => {
   );
 
   return moviesWithHighQualityPoster;
-};
-
-const parseCast = cast => {
-  const directorsAndActors = cast.reduce(
-    (cast, {type, name}) => {
-      if (type === "D") {
-        cast.directors.push(name);
-        return cast;
-      }
-
-      if (type === "A") {
-        cast.actors.push(name);
-        return cast;
-      }
-    },
-    {directors: [], actors: []}
-  );
-
-  return directorsAndActors;
 };
 
 module.exports = parseMovies;
