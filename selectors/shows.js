@@ -1,26 +1,26 @@
 const {getMovieById} = require("./movies");
 
 const getShowsByMovieId = (movies, movieId) => {
-  const movie = getMovieById(movies, movieId)
-  if (!movie) return null
+  const movie = getMovieById(movies, movieId);
+  if (!movie) return null;
 
-  return movie.shows
-}
+  return movie.shows;
+};
 
-getShowsByMovieIdAndCinemaId = (movies, movieId, cinemaId) => {
-  const showsPerMovie = getShowsByMovieId(movies, movieId)
-  if (!showsPerMovie) return null
+const getShowsByMovieIdAndCinemaId = (movies, movieId, cinemaId) => {
+  const showsPerMovie = getShowsByMovieId(movies, movieId);
+  if (!showsPerMovie) return null;
 
   const showsPerCinema = showsPerMovie
-    .filter(({ cinemaWithShows }) => cinemaWithShows.hasOwnProperty(cinemaId))
+    .filter(({cinemaWithShows}) => cinemaWithShows.hasOwnProperty(cinemaId)) //eslint-disable-line
     .map(shows => {
-      const { cinemaWithShows } = shows
-      const cinemaInShows = cinemaWithShows[cinemaId]
+      const {cinemaWithShows} = shows;
+      const cinemaInShows = cinemaWithShows[cinemaId];
 
-      return { ...shows, cinemaWithShows: { [cinemaId]: cinemaInShows } }
-    })
+      return {...shows, cinemaWithShows: {[cinemaId]: cinemaInShows}};
+    });
 
-  return showsPerCinema
-}
+  return showsPerCinema;
+};
 
-module.exports = { getShowsByMovieId, getShowsByMovieIdAndCinemaId }
+module.exports = {getShowsByMovieId, getShowsByMovieIdAndCinemaId};
