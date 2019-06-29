@@ -1,7 +1,7 @@
 const {
   getShowsByMovieId,
   getShowsByMovieIdAndCinemaId,
-} = require("../resolvers/shows");
+} = require("../../resolvers/shows");
 
 exports.getShowsByMovieId = async (request, reply) => {
   const shows = await getShowsByMovieId(request.params.movieId);

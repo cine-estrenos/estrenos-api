@@ -3,7 +3,7 @@ const cron = require("node-cron");
 
 const {getCinemarkData} = require("../utils");
 
-exports.cinemarkCron = fp(function cinemarkCron(fastify, opts, next) {
+module.exports = fp(function cinemarkCron(fastify, opts, next) {
   const saveCinemarkDataToRedis = async () => {
     const {data, error} = await getCinemarkData();
     if (error) fastify.log.error(error);
