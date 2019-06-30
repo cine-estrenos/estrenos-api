@@ -10,12 +10,11 @@ const createTicketsLink = (cinemaId, sessionId, featureId) => {
 };
 
 const parseShows = movieList => {
-  const showsParsed = movieList.map(({ id: formatId, format, version, cinemaList }) => {
+  const showsParsed = movieList.map(({ format, version, cinemaList }) => {
     const cinemaWithShows = cinemaList.map(({ id: cinemaId, sessionList }) => {
       const shows = sessionList.map(({ id: sessionId, feature: featureId, dtm: timestamp, seats }) => ({
         seats,
         cinemaId: String(cinemaId),
-        formatId: String(formatId),
         format: titleize(format),
         version: titleize(version),
         time: dayjs(timestamp).format('HH[:]mm'),
