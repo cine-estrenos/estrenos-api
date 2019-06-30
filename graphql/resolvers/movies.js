@@ -1,4 +1,4 @@
-const {getMovies, getMovieById} = require("../../resolvers/movies");
+const { getMovies, getMovieById } = require('../../resolvers/movies');
 
 module.exports = {
   Query: {

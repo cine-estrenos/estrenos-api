@@ -1,4 +1,4 @@
-const {getCinemas} = require("../../resolvers/cinemas");
+const { getCinemas } = require('../../resolvers/cinemas');
 
 module.exports = {
   Query: {

@@ -1,4 +1,4 @@
-const {gql} = require("apollo-server-fastify");
+const { gql } = require('apollo-server-fastify');
 
 module.exports = gql`
   type Cast {

@@ -1,24 +1,24 @@
-const titleize = require("titleize");
+const titleize = require('titleize');
 
-const {parseShows} = require("./shows");
-const {getImdbInfo, emojifier} = require("../lib");
+const { parseShows } = require('./shows');
+const { getImdbInfo, emojifier } = require('../lib');
 
 const parseCast = cast => {
   const directorsAndActors = cast.reduce(
-    (acc, {type, name}) => {
-      if (type === "D") {
+    (acc, { type, name }) => {
+      if (type === 'D') {
         acc.directors.push(name);
         return acc;
       }
 
-      if (type === "A") {
+      if (type === 'A') {
         acc.actors.push(name);
         return acc;
       }
 
       return acc;
     },
-    {directors: [], actors: []}
+    { directors: [], actors: [] }
   );
 
   return directorsAndActors;
@@ -26,10 +26,7 @@ const parseCast = cast => {
 
 const parseMovies = async movies => {
   // Remove special or festival movies
-  const premieres = movies.filter(
-    ({attributeList}) =>
-      !attributeList.includes(2) && !attributeList.includes(3)
-  );
+  const premieres = movies.filter(({ attributeList }) => !attributeList.includes(2) && !attributeList.includes(3));
 
   // Parse movies to match new structure
   const parsedMovies = premieres
@@ -51,16 +48,16 @@ const parseMovies = async movies => {
       } = premiere;
 
       const title = titleize(name);
-      const minAge = rating.split(" ")[0];
+      const minAge = rating.split(' ')[0];
 
       const length = `${duration} minutos`;
       const inCinemas = cinemaList.sort((a, b) => a - b).map(String);
 
       const isPremiere = attributeList.includes(0);
-      const categoryParsed = {value: mCategory, emoji: emojifier(mCategory)};
+      const categoryParsed = { value: mCategory, emoji: emojifier(mCategory) };
 
       const amazonTrailerUrl = urlTrailerAmazon;
-      const [, youtubeTrailerUrl] = urlTrailerYoutube.split(".be/");
+      const [, youtubeTrailerUrl] = urlTrailerYoutube.split('.be/');
 
       const cast = parseCast(personList);
       const shows = parseShows(movieList);
@@ -92,8 +89,8 @@ const parseMovies = async movies => {
   const moviesWithHighQualityPoster = await Promise.all(
     parsedMovies.map(async movie => {
       try {
-        const imdbInfo = await getImdbInfo(movie.name);
-        return {...movie, ...imdbInfo};
+        const imdbInfo = await getImdbInfo(movie.title);
+        return { ...movie, ...imdbInfo };
       } catch (error) {
         return movie;
       }
