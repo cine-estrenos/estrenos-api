@@ -1,4 +1,4 @@
-const parseCinemas = require("./cinemas");
-const parseMovies = require("./movies");
+const parseCinemas = require('./cinemas');
+const parseMovies = require('./movies');
 
-module.exports = {parseCinemas, parseMovies};
+module.exports = { parseCinemas, parseMovies };

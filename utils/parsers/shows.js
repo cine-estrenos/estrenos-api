@@ -1,13 +1,13 @@
-const titleize = require('titleize')
-const dayjs = require('dayjs')
-require('dayjs/locale/es')
+const titleize = require('titleize');
+const dayjs = require('dayjs');
+require('dayjs/locale/es');
 
-dayjs.locale('es')
+dayjs.locale('es');
 
 const createTicketsLink = (cinemaId, sessionId, featureId) => {
-  const baseUrl = 'https://tickets.cinemarkhoyts.com.ar/NSTicketing'
-  return `${baseUrl}/?CinemaId=${cinemaId}&SessionId=${sessionId}&FeatureId=${featureId}`
-}
+  const baseUrl = 'https://tickets.cinemarkhoyts.com.ar/NSTicketing';
+  return `${baseUrl}/?CinemaId=${cinemaId}&SessionId=${sessionId}&FeatureId=${featureId}`;
+};
 
 const parseShows = movieList => {
   const showsParsed = movieList.map(({ id: formatId, format, version, cinemaList }) => {
@@ -21,15 +21,15 @@ const parseShows = movieList => {
         time: dayjs(timestamp).format('HH[:]mm'),
         date: titleize(dayjs(timestamp).format('dddd D [de] MMMM')),
         link: createTicketsLink(cinemaId, sessionId, featureId),
-      }))
+      }));
 
-      return shows
-    })
+      return shows;
+    });
 
-    return cinemaWithShows
-  })
+    return cinemaWithShows;
+  });
 
-  return showsParsed.flat(2)
-}
+  return showsParsed.flat(2);
+};
 
-module.exports = { parseShows }
+module.exports = { parseShows };

@@ -1,42 +1,56 @@
-const {getShowsByMovieId, getShowsByMovieIdAndCinemaId} = require("./shows");
+const { getShowsByMovieId, getShowsByMovieIdAndCinemaId } = require('./shows');
 
-describe("Shows selectors", () => {
-  it("getShowsByMovieId", () => {
+describe('Shows selectors', () => {
+  it('getShowsByMovieId', () => {
     expect(
       getShowsByMovieId(
         [
-          {id: "1", name: "Movie 1", shows: [{id: "10", name: "Pepe pompin"}]},
-          {id: "2", name: "Movie 2", shows: [{id: "11", name: "Pepe pompon"}]},
+          {
+            id: '1',
+            name: 'Movie 1',
+            shows: [{ id: '10', name: 'Pepe pompin' }],
+          },
+          {
+            id: '2',
+            name: 'Movie 2',
+            shows: [{ id: '11', name: 'Pepe pompon' }],
+          },
         ],
-        "1"
+        '1'
       )
-    ).toEqual([{id: "10", name: "Pepe pompin"}]);
+    ).toEqual([{ id: '10', name: 'Pepe pompin' }]);
   });
 
-  it("getShowsByMovieId", () => {
+  it('getShowsByMovieIdAndCinemaId', () => {
     expect(
       getShowsByMovieIdAndCinemaId(
         [
           {
-            id: "1",
-            name: "Movie 1",
+            id: '1',
+            name: 'Movie 1',
             shows: [
-              {id: "10", name: "Pepe pompin", cinemaWithShows: {"2020": true}},
+              {
+                id: '10',
+                name: 'Pepe pompin',
+                cinemaWithShows: { '2020': true },
+              },
             ],
           },
           {
-            id: "2",
-            name: "Movie 2",
+            id: '2',
+            name: 'Movie 2',
             shows: [
-              {id: "11", name: "Pepe pompon", cinemaWithShows: {"2021": true}},
+              {
+                id: '11',
+                name: 'Pepe pompon',
+                cinemaWithShows: { '2021': true },
+              },
             ],
           },
         ],
-        "1",
-        "2020"
+        '1',
+        '2020'
       )
-    ).toEqual([
-      {id: "10", name: "Pepe pompin", cinemaWithShows: {"2020": true}},
-    ]);
+    ).toEqual([{ id: '10', name: 'Pepe pompin', cinemaWithShows: { '2020': true } }]);
   });
 });
