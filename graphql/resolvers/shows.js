@@ -2,7 +2,7 @@ const { getShowsByMovieId, getShowsByMovieIdAndCinemaId } = require('../../resol
 
 module.exports = {
   Query: {
-    shows: (_, args) =>
-      args.cinemaId ? getShowsByMovieIdAndCinemaId(args.movieId, args.cinemaId) : getShowsByMovieId(args.movieId),
+    shows: (_, { movieId, cinemaId }) =>
+      cinemaId ? getShowsByMovieIdAndCinemaId(movieId, cinemaId) : getShowsByMovieId(movieId),
   },
 };
