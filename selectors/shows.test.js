@@ -30,9 +30,8 @@ describe('Shows selectors', () => {
             name: 'Movie 1',
             shows: [
               {
-                id: '10',
+                cinemaId: '10',
                 name: 'Pepe pompin',
-                cinemaWithShows: { '2020': true },
               },
             ],
           },
@@ -41,16 +40,15 @@ describe('Shows selectors', () => {
             name: 'Movie 2',
             shows: [
               {
-                id: '11',
+                cinemaId: '11',
                 name: 'Pepe pompon',
-                cinemaWithShows: { '2021': true },
               },
             ],
           },
         ],
-        '1',
-        '2020'
+        '2',
+        '11'
       )
-    ).toEqual([{ id: '10', name: 'Pepe pompin', cinemaWithShows: { '2020': true } }]);
+    ).toEqual([{ cinemaId: '11', name: 'Pepe pompon' }]);
   });
 });

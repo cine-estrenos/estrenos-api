@@ -15,12 +15,10 @@ describe('Shows resolvers', () => {
       {
         id: '1',
         name: 'movie',
-        shows: [{ name: 'pepe pompin', cinemaWithShows: { '2020': true } }],
+        shows: [{ name: 'pepe pompin', cinemaId: '2020' }],
       },
     ]);
 
-    expect(await getShowsByMovieIdAndCinemaId('1', '2020')).toEqual([
-      { name: 'pepe pompin', cinemaWithShows: { '2020': true } },
-    ]);
+    expect(await getShowsByMovieIdAndCinemaId('1', '2020')).toEqual([{ name: 'pepe pompin', cinemaId: '2020' }]);
   });
 });
