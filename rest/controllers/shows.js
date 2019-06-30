@@ -1,4 +1,4 @@
-const { getShowsByMovieId, getShowsByMovieIdAndCinemaId } = require('../resolvers/shows');
+const { getShowsByMovieId, getShowsByMovieIdAndCinemaId } = require('../../resolvers/shows');
 
 exports.getShowsByMovieId = async (request, reply) => {
   const shows = await getShowsByMovieId(request.params.movieId);

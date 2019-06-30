@@ -1,16 +1,19 @@
 const dotenv = require('dotenv');
 
 const client = require('./client');
-const { cinemarkCron } = require('./plugins/cinemark');
-const { getCinemas } = require('./controllers/cinemas');
-const { getMovieById, getMovies } = require('./controllers/movies');
-const { getShowsByMovieId, getShowsByMovieIdAndCinemaId } = require('./controllers/shows');
+const cinemarkCron = require('./plugins/cinemark');
+const graphqlEndpoint = require('./plugins/apollo');
+
+const { getCinemas } = require('./rest/controllers/cinemas');
+const { getMovieById, getMovies } = require('./rest/controllers/movies');
+const { getShowsByMovieId, getShowsByMovieIdAndCinemaId } = require('./rest/controllers/shows');
 
 // Load env variables
 dotenv.config();
 
 // Register cron job
 client.register(cinemarkCron);
+client.register(graphqlEndpoint);
 
 // Routes
 client.get('/cinemas', getCinemas);
