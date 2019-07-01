@@ -26,7 +26,6 @@ client.get('/shows/:movieId/:cinemaId', getShowsByMovieIdAndCinemaId);
 const main = async () => {
   try {
     await client.listen(process.env.PORT || 3000);
-    console.log(process.env.PORT);
     client.log.info(`Server running on ${client.server.address()}`);
   } catch (error) {
     client.log.error();
