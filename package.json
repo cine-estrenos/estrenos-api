@@ -17,6 +17,9 @@
     }
   ],
   "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0 <11.0.0"
+  },
   "dependencies": {
     "apollo-server-fastify": "^2.6.7",
     "camelcase-keys": "^6.0.0",
