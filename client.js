@@ -9,6 +9,6 @@ const client = Fastify({ logger: true });
 // Register plugins
 client.register(fastifyHelmet);
 client.register(fastifyCompress);
-client.register(fastifyRedis, { host: '127.0.0.1' });
+client.register(fastifyRedis, process.env['REDISTOGO_URL'] || { host: '127.0.0.1' });
 
 module.exports = client;
