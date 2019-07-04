@@ -1,4 +1,4 @@
-const titleize = require('titleize');
+import titleize from 'titleize';
 
 const parseCinemaName = (name = '') => {
   const fixedNames = {
@@ -45,4 +45,4 @@ const parseCinemas = cinemas => {
   return parsedCinemas;
 };
 
-module.exports = parseCinemas;
+export default parseCinemas;

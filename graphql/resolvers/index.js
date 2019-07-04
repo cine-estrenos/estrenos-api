@@ -1,7 +1,7 @@
-const merge = require('lodash.merge');
+import merge from 'lodash.merge';
 
-const cinemas = require('./cinemas');
-const movies = require('./movies');
-const shows = require('./shows');
+import cinemas from './cinemas';
+import movies from './movies';
+import shows from './shows';
 
-module.exports = merge(cinemas, movies, shows);
+export default merge(cinemas, movies, shows);

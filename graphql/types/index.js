@@ -1,8 +1,10 @@
-const { gql } = require('apollo-server-fastify');
+import ApolloServerFastify from 'apollo-server-fastify';
 
-const Cinema = require('./cinemas');
-const Movie = require('./movies');
-const Show = require('./shows');
+import Cinema from './cinemas';
+import Movie from './movies';
+import Show from './shows';
+
+const { gql } = ApolloServerFastify;
 
 const Query = gql`
   type Query {
@@ -10,4 +12,4 @@ const Query = gql`
   }
 `;
 
-module.exports = [Query, Cinema, Movie, Show];
+export default [Query, Cinema, Movie, Show];

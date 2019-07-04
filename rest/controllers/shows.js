@@ -1,13 +1,17 @@
-const { getShowsByMovieId, getShowsByMovieIdAndCinemaId } = require('../../resolvers/shows');
+import { getShowsByMovieIdResolver, getShowsByMovieIdAndCinemaIdResolver } from '../../resolvers/shows';
 
-exports.getShowsByMovieId = async (request, reply) => {
-  const shows = await getShowsByMovieId(request.params.movieId);
+const getShowsByMovieIdController = async (request, reply) => {
+  const { movieId } = request.params;
+  const shows = await getShowsByMovieIdResolver(movieId);
+
+  return shows ? reply.send(shows) : reply.code(404).send('No shows found');
+};
+
+const getShowsByMovieIdAndCinemaIdController = async (request, reply) => {
+  const { movieId, cinemaId } = request.params;
+  const shows = await getShowsByMovieIdAndCinemaIdResolver(movieId, cinemaId);
 
   return shows ? reply.send(shows) : reply.code(404).send('No shows found');
 };
 
-exports.getShowsByMovieIdAndCinemaId = async (request, reply) => {
-  const shows = await getShowsByMovieIdAndCinemaId(request.params.movieId, request.params.cinemaId);
-
-  return shows ? reply.send(shows) : reply.code(404).send('No shows found');
-};
+export { getShowsByMovieIdController, getShowsByMovieIdAndCinemaIdController };

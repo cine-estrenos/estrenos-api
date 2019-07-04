@@ -1,7 +1,7 @@
-const titleize = require('titleize');
+import titleize from 'titleize';
 
-const { parseShows } = require('./shows');
-const { getImdbInfo, emojifier } = require('../lib');
+import parseShows from './shows';
+import { getImdbInfo, emojifier } from '../lib';
 
 const parseCast = cast => {
   const directorsAndActors = cast.reduce(
@@ -100,4 +100,4 @@ const parseMovies = async movies => {
   return moviesWithHighQualityPoster;
 };
 
-module.exports = parseMovies;
+export default parseMovies;

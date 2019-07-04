@@ -1,12 +1,12 @@
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 
-const client = require('./client');
-const cinemarkCron = require('./plugins/cinemark');
-const graphqlEndpoint = require('./plugins/apollo');
+import client from './client';
+import cinemarkCron from './plugins/cinemark';
+import graphqlEndpoint from './plugins/apollo';
 
-const { getCinemas } = require('./rest/controllers/cinemas');
-const { getMovieById, getMovies } = require('./rest/controllers/movies');
-const { getShowsByMovieId, getShowsByMovieIdAndCinemaId } = require('./rest/controllers/shows');
+import getCinemasController from './rest/controllers/cinemas';
+import { getMovieByIdController, getMoviesController } from './rest/controllers/movies';
+import { getShowsByMovieIdController, getShowsByMovieIdAndCinemaIdController } from './rest/controllers/shows';
 
 // Load env variables
 dotenv.config();
@@ -16,11 +16,11 @@ client.register(cinemarkCron);
 client.register(graphqlEndpoint);
 
 // Routes
-client.get('/cinemas', getCinemas);
-client.get('/movies', getMovies);
-client.get('/movies/:movieId', getMovieById);
-client.get('/shows/:movieId', getShowsByMovieId);
-client.get('/shows/:movieId/:cinemaId', getShowsByMovieIdAndCinemaId);
+client.get('/cinemas', getCinemasController);
+client.get('/movies', getMoviesController);
+client.get('/movies/:movieId', getMovieByIdController);
+client.get('/shows/:movieId', getShowsByMovieIdController);
+client.get('/shows/:movieId/:cinemaId', getShowsByMovieIdAndCinemaIdController);
 
 // Main function
 const main = async () => {

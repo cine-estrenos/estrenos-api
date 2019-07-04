@@ -1,4 +1,4 @@
-const { getMovieById } = require('./movies');
+import { getMovieById } from './movies';
 
 describe('Movies selectors', () => {
   it('getMovieById', () => {

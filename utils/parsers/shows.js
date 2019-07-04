@@ -1,6 +1,6 @@
-const titleize = require('titleize');
-const dayjs = require('dayjs');
-require('dayjs/locale/es');
+import titleize from 'titleize';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 
 dayjs.locale('es');
 
@@ -31,4 +31,4 @@ const parseShows = movieList => {
   return showsParsed.flat(2);
 };
 
-module.exports = { parseShows };
+export default parseShows;

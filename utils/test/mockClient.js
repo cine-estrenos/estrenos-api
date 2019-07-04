@@ -7,4 +7,4 @@ const api = {
   mockSet: response => api.redis.get.mockReturnValueOnce(JSON.stringify(response)),
 };
 
-module.exports = api;
+export default api;

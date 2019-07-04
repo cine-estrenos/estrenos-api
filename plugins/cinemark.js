@@ -1,9 +1,9 @@
-const fp = require('fastify-plugin');
-const cron = require('node-cron');
+import fp from 'fastify-plugin';
+import cron from 'node-cron';
 
-const { getCinemarkData } = require('../utils');
+import getCinemarkData from '../utils';
 
-module.exports = fp(function cinemarkCron(fastify, opts, next) {
+export default fp(function cinemarkCron(fastify, opts, next) {
   const saveCinemarkDataToRedis = async () => {
     const { data, error } = await getCinemarkData();
     if (error) fastify.log.error(error);

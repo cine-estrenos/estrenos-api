@@ -1,18 +1,18 @@
-const mockClient = require('../utils/test/mockClient');
-const { getMovies, getMovieById } = require('./movies');
+import mockClient from '../utils/test/mockClient';
+import { getMoviesResolver, getMovieByIdResolver } from './movies';
 
 jest.mock('../client', () => mockClient);
 
 describe('Movies resolvers', () => {
-  it('getMovies', async () => {
+  it('getMoviesResolver', async () => {
     mockClient.mockGet([{ id: '1', name: 'movie 1' }]);
 
-    expect(await getMovies('1')).toEqual([{ id: '1', name: 'movie 1' }]);
+    expect(await getMoviesResolver('1')).toEqual([{ id: '1', name: 'movie 1' }]);
   });
 
-  it('getMovieById', async () => {
+  it('getMovieByIdResolver', async () => {
     mockClient.mockGet([{ id: '1', name: 'movie 1' }]);
 
-    expect(await getMovieById('1')).toEqual({ id: '1', name: 'movie 1' });
+    expect(await getMovieByIdResolver('1')).toEqual({ id: '1', name: 'movie 1' });
   });
 });

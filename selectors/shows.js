@@ -1,4 +1,4 @@
-const { getMovieById } = require('./movies');
+import getMovieById from './movies';
 
 const getShowsByMovieId = (movies, movieId) => {
   const movie = getMovieById(movies, movieId);
@@ -15,4 +15,4 @@ const getShowsByMovieIdAndCinemaId = (movies, movieId, cinemaId) => {
   return showsPerCinema;
 };
 
-module.exports = { getShowsByMovieId, getShowsByMovieIdAndCinemaId };
+export { getShowsByMovieId, getShowsByMovieIdAndCinemaId };

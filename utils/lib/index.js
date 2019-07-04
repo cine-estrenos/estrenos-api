@@ -1,4 +1,4 @@
-const got = require('got');
+import got from 'got';
 
 async function getImdbInfo(title) {
   const currentYear = new Date().getFullYear();
@@ -38,4 +38,4 @@ const emojisGenres = {
 
 const emojifier = category => emojisGenres[category] || '';
 
-module.exports = { getImdbInfo, emojifier };
+export { getImdbInfo, emojifier };

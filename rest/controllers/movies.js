@@ -1,9 +1,12 @@
-const { getMovies, getMovieById } = require('../../resolvers/movies');
+import { getMoviesResolver, getMovieByIdResolver } from '../../resolvers/movies';
 
-exports.getMovies = getMovies;
+const getMoviesController = getMoviesResolver;
 
-exports.getMovieById = async (request, reply) => {
-  const movie = await getMovieById(request.params.movieId);
+const getMovieByIdController = async (request, reply) => {
+  const { movieId } = request.params;
+  const movie = await getMovieByIdResolver(movieId);
 
   return movie ? reply.send(movie) : reply.code(404).send('No movie found');
 };
+
+export { getMoviesController, getMovieByIdController };

@@ -1,6 +1,8 @@
-const { gql } = require('apollo-server-fastify');
+import ApolloServerFastify from 'apollo-server-fastify';
 
-module.exports = gql`
+const { gql } = ApolloServerFastify;
+
+export default gql`
   type Coordinates {
     latitude: String!
     longitude: String!

@@ -1,4 +1,4 @@
-const parseCinemas = require('./cinemas');
-const parseMovies = require('./movies');
+import parseCinemas from './cinemas';
+import parseMovies from './movies';
 
-module.exports = { parseCinemas, parseMovies };
+export { parseCinemas, parseMovies };
