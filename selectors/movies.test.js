@@ -1,4 +1,4 @@
-import { getMovieById } from './movies';
+import getMovieById from './movies';
 
 describe('Movies selectors', () => {
   it('getMovieById', () => {
