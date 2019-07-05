@@ -1,8 +1,8 @@
-const got = require('got');
-const omit = require('lodash.omit');
-const camelcaseKeys = require('camelcase-keys');
+import got from 'got';
+import omit from 'lodash.omit';
+import camelcaseKeys from 'camelcase-keys';
 
-const { parseCinemas, parseMovies } = require('./parsers');
+import { parseCinemas, parseMovies } from './parsers';
 
 const getCinemarkData = async () => {
   try {
@@ -22,4 +22,4 @@ const getCinemarkData = async () => {
   }
 };
 
-module.exports = { getCinemarkData };
+export default getCinemarkData;

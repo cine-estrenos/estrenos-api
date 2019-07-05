@@ -1,8 +1,8 @@
-const { getMovies, getMovieById } = require('../../resolvers/movies');
+import { getMoviesResolver, getMovieByIdResolver } from '../../resolvers/movies';
 
-module.exports = {
+export default {
   Query: {
-    movies: getMovies,
-    movie: (_, { id }) => getMovieById(id),
+    movies: getMoviesResolver,
+    movie: (_, { id }) => getMovieByIdResolver(id),
   },
 };

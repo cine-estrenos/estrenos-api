@@ -1,3 +1,5 @@
-const { getCinemas } = require('../../resolvers/cinemas');
+import getCinemas from '../../resolvers/cinemas';
 
-exports.getCinemas = getCinemas;
+const getCinemasController = getCinemas;
+
+export default getCinemasController;

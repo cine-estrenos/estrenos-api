@@ -1,7 +1,7 @@
-const { getCinemas } = require('../../resolvers/cinemas');
+import getCinemasResolver from '../../resolvers/cinemas';
 
-module.exports = {
+export default {
   Query: {
-    cinemas: getCinemas,
+    cinemas: getCinemasResolver,
   },
 };

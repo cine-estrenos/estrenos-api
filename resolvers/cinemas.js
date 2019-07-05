@@ -1,7 +1,7 @@
-const client = require('../client');
+import client from '../client';
 
-exports.getCinemas = async () => {
+export default async function getCinemasResolver() {
   const cinemas = await client.redis.get('cinemas');
 
   return JSON.parse(cinemas);
-};
+}

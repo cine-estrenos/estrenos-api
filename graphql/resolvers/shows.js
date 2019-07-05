@@ -1,8 +1,8 @@
-const { getShowsByMovieId, getShowsByMovieIdAndCinemaId } = require('../../resolvers/shows');
+import { getShowsByMovieIdResolver, getShowsByMovieIdAndCinemaIdResolver } from '../../resolvers/shows';
 
-module.exports = {
+export default {
   Query: {
     shows: (_, { movieId, cinemaId }) =>
-      cinemaId ? getShowsByMovieIdAndCinemaId(movieId, cinemaId) : getShowsByMovieId(movieId),
+      cinemaId ? getShowsByMovieIdAndCinemaIdResolver(movieId, cinemaId) : getShowsByMovieIdResolver(movieId),
   },
 };

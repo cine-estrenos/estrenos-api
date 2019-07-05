@@ -1,4 +1,4 @@
-const { getShowsByMovieId, getShowsByMovieIdAndCinemaId } = require('./shows');
+import { getShowsByMovieId, getShowsByMovieIdAndCinemaId } from './shows';
 
 describe('Shows selectors', () => {
   it('getShowsByMovieId', () => {

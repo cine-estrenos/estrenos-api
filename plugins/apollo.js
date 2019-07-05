@@ -1,8 +1,9 @@
-const { ApolloServer } = require('apollo-server-fastify');
+import ApolloServerFastify from 'apollo-server-fastify';
 
-const typeDefs = require('../graphql/types');
-const resolvers = require('../graphql/resolvers');
+import typeDefs from '../graphql/types';
+import resolvers from '../graphql/resolvers';
 
+const { ApolloServer } = ApolloServerFastify;
 const server = new ApolloServer({ typeDefs, resolvers });
 
-module.exports = server.createHandler();
+export default server.createHandler();
