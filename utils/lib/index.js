@@ -20,7 +20,7 @@ async function getImdbInfo(title) {
   const poster = `${baseImageUrl}/${withWidth(300)}/${posterPath}`;
   const votesParsed = String(votes).length === 1 ? `${votes}.0` : `${votes}`;
 
-  return { name, votes: votesParsed, poster } // eslint-disable-line
+  return { title: name, votes: votesParsed, poster } // eslint-disable-line
 }
 
 const emojisGenres = {
