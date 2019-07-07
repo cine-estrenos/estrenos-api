@@ -1,6 +1,6 @@
 import got from 'got';
 
-async function getImdbInfo(title) {
+const getImdbInfo = async title => {
   const currentYear = new Date().getFullYear();
 
   const apiKey = process.env.MOVIEDB_APIKEY;
@@ -21,21 +21,6 @@ async function getImdbInfo(title) {
   const votesParsed = String(votes).length === 1 ? `${votes}.0` : `${votes}`;
 
   return { title: name, votes: votesParsed, poster } // eslint-disable-line
-}
-
-const emojisGenres = {
-  Drama: '🎭',
-  Acción: '💥',
-  Terror: '☠️',
-  Thriller: '😱',
-  Animación: '🦄',
-  Aventuras: '🤠',
-  Biografia: '✍️',
-  Comedia: '😂',
-  Policial: '👮‍',
-  Suspenso: '😱',
 };
 
-const emojifier = category => emojisGenres[category] || '';
-
-export { getImdbInfo, emojifier };
+export default getImdbInfo;
