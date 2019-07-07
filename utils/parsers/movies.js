@@ -1,27 +1,19 @@
 import titleize from 'titleize';
 
 import parseShows from './shows';
-import { getImdbInfo, emojifier } from '../lib';
+import getImdbInfo from '../lib/imdb';
 
 const parseCast = cast => {
-  const directorsAndActors = cast.reduce(
+  const parsedCast = cast.reduce(
     (acc, { type, name }) => {
-      if (type === 'D') {
-        acc.directors.push(name);
-        return acc;
-      }
-
-      if (type === 'A') {
-        acc.actors.push(name);
-        return acc;
-      }
-
+      if (type === 'D') acc.directors.push(name);
+      if (type === 'A') acc.actors.push(name);
       return acc;
     },
     { directors: [], actors: [] }
   );
 
-  return directorsAndActors;
+  return parsedCast;
 };
 
 const parseMovies = async movies => {
@@ -44,7 +36,7 @@ const parseMovies = async movies => {
         cinemaList,
         attributeList,
         movieList,
-        category: mCategory,
+        category,
       } = premiere;
 
       const title = titleize(name);
@@ -53,17 +45,14 @@ const parseMovies = async movies => {
       const length = `${duration} minutos`;
       const inCinemas = cinemaList.sort((a, b) => a - b).map(String);
 
+      const poster = urlPoster;
       const isPremiere = attributeList.includes(0);
-      const categoryParsed = { value: mCategory, emoji: emojifier(mCategory) };
 
       const amazonTrailerUrl = urlTrailerAmazon;
       const [, youtubeTrailerUrl] = urlTrailerYoutube.split('.be/');
 
       const cast = parseCast(personList);
       const shows = parseShows(movieList);
-
-      const poster = urlPoster;
-      const category = categoryParsed;
 
       const movie = {
         id,
