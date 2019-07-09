@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import Sentry from '@sentry/node';
 
 import client from './client';
 import cinemarkCron from './plugins/cinemark';
@@ -11,6 +12,11 @@ import { getShowsByMovieIdController, getShowsByMovieIdAndCinemaIdController } f
 // Load env variables
 dotenv.config();
 
+// Load Sentry
+if (process.env.NODE_ENV === 'development') {
+  Sentry.init({ dsn: 'https://dded0f72a55b4341b932e667bb668693@sentry.io/1500556' });
+}
+
 // Register cron job
 client.register(cinemarkCron);
 client.register(graphqlEndpoint);
@@ -22,15 +28,8 @@ client.get('/movies/:movieId', getMovieByIdController);
 client.get('/shows/:movieId', getShowsByMovieIdController);
 client.get('/shows/:movieId/:cinemaId', getShowsByMovieIdAndCinemaIdController);
 
-// Main function
-const main = async () => {
-  try {
-    await client.listen(process.env.PORT || 3000);
-    client.log.info(`Server running on ${client.server.address()}`);
-  } catch (error) {
-    client.log.error();
-    process.exit(1);
-  }
-};
-
-main();
+// Run client
+client
+  .listen(process.env.PORT || 3000)
+  .then(() => client.log.info(`Server running on ${client.server.address()}`))
+  .catch(error => client.log.error(error));
