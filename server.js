@@ -28,6 +28,6 @@ client.get('/shows/:movieId/:cinemaId', getShowsByMovieIdAndCinemaIdController);
 
 // Run client
 client
-  .listen(process.env.PORT || 3000)
+  .listen(process.env.PORT || 3000, '0.0.0.0')
   .then(() => client.log.info(`Server running on ${client.server.address()}`))
   .catch(error => client.log.error(error));
