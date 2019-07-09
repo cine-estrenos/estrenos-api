@@ -15,7 +15,6 @@ const getCinemarkData = async () => {
 
     const cinemas = parseCinemas(dataInCamelCase.cinemas);
     const parsedData = { movies, moviesWithoutShows, cinemas };
-    // const parsedData = { moviesWithoutShows, cinemas };
 
     return { data: Object.entries(parsedData), error: null };
   } catch (error) {
