@@ -13,9 +13,7 @@ import { getShowsByMovieIdController, getShowsByMovieIdAndCinemaIdController } f
 dotenv.config();
 
 // Load Sentry
-if (process.env.NODE_ENV !== 'development') {
-  Sentry.init({ dsn: 'https://dded0f72a55b4341b932e667bb668693@sentry.io/1500556' });
-}
+if (process.env.NODE_ENV !== 'development') Sentry.init({ dsn: process.env.SENTRY_DSN });
 
 // Register cron job
 client.register(cinemarkCron);
