@@ -10,12 +10,12 @@ const getCinemarkData = async () => {
     const dataInPascalCase = JSON.parse(body.slice(15, -1));
     const dataInCamelCase = camelcaseKeys(dataInPascalCase, { deep: true });
 
-    const movies = await parseMovies(dataInCamelCase.films);
+    // const movies = await parseMovies(dataInCamelCase.films);
     // const moviesWithoutShows = movies.map(movie => omit(movie, 'shows'));
 
-    // const cinemas = parseCinemas(dataInCamelCase.cinemas);
+    const cinemas = parseCinemas(dataInCamelCase.cinemas);
     // const parsedData = { movies, moviesWithoutShows, cinemas };
-    const parsedData = { movies };
+    const parsedData = { cinemas };
 
     return { data: Object.entries(parsedData), error: null };
   } catch (error) {
