@@ -25,10 +25,10 @@ client.get('/shows/:movieId/:cinemaId', getShowsByMovieIdAndCinemaIdController);
 // Main function
 const main = async () => {
   try {
-    await client.listen(process.env.PORT || 3000);
+    await client.listen(process.env.PORT || 3000, '0.0.0.0');
     client.log.info(`Server running on ${client.server.address()}`);
   } catch (error) {
-    client.log.error();
+    client.log.error(error);
     process.exit(1);
   }
 };
