@@ -43,7 +43,7 @@
   "devDependencies": {
     "@babel/core": "^7.5.0",
     "@babel/preset-env": "^7.5.5",
-    "@types/got": "^9.6.2",
+    "@types/got": "^9.6.6",
     "@types/graphql": "^14.2.2",
     "@types/lodash.merge": "^4.6.6",
     "@types/lodash.omit": "^4.5.6",
