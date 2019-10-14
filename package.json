@@ -22,7 +22,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@sentry/node": "^5.5.0",
+    "@sentry/node": "^5.7.0",
     "camelcase-keys": "^6.0.1",
     "apollo-server-fastify": "^2.9.3",
     "dayjs": "^1.8.15",
