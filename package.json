@@ -41,7 +41,7 @@
     "titleize": "^2.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.0",
+    "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.5.5",
     "@types/graphql": "^14.5.0",
     "@types/got": "^9.6.7",
