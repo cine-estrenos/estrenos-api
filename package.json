@@ -24,7 +24,7 @@
   "dependencies": {
     "@sentry/node": "^5.5.0",
     "camelcase-keys": "^6.0.1",
-    "apollo-server-fastify": "^2.9.3",
+    "apollo-server-fastify": "^2.9.13",
     "dayjs": "^1.8.15",
     "dotenv": "^8.0.0",
     "fastify": "^2.8.0",
