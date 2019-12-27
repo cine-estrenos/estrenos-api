@@ -1,10 +1,11 @@
-# Estrenos API
+<h1 align="center">Estrenos API</h1>
 
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-
-[![Build Status](https://img.shields.io/travis/cine-estrenos/estrenos-api?style=for-the-badge)](https://travis-ci.com/cine-estrenos/estrenos-api) [![Dependencies Status](https://img.shields.io/david/cine-estrenos/estrenos-api?style=for-the-badge)](https://img.shields.io/david/cine-estrenos/estrenos-api?style=for-the-badge) [![Issues Status](https://img.shields.io/github/issues/cine-estrenos/estrenos-api?style=for-the-badge)](https://img.shields.io/github/issues/cine-estrenos/estrenos-api?style=for-the-badge) [![Issues Status](https://img.shields.io/github/issues-pr/cine-estrenos/estrenos-api?style=for-the-badge)](https://img.shields.io/github/issues-pr/cine-estrenos/estrenos-api?style=for-the-badge)
+<div align="center">
+  <img src="https://img.shields.io/travis/cine-estrenos/estrenos-api?style=for-the-badge">
+  <img src="https://img.shields.io/david/cine-estrenos/estrenos-api?style=for-the-badge">
+  <img src="https://img.shields.io/github/issues/cine-estrenos/estrenos-api?style=for-the-badge">
+  <img src="https://img.shields.io/github/issues-pr/cine-estrenos/estrenos-api?style=for-the-badge">
+</div>
 
 ## Local development
 
@@ -57,10 +58,6 @@ Anyways, is not recommended to bypass the git hooks just because you can, they a
 
 A mock response with the JSON from Cinemark http://cinemark-data.free.beeceptor.com
 
----
-
-[![Build Status](https://img.shields.io/github/license/cine-estrenos/estrenos-api?style=for-the-badge)](https://img.shields.io/github/license/cine-estrenos/estrenos-api?style=for-the-badge)
-
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -78,6 +75,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
