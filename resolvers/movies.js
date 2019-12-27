@@ -7,7 +7,7 @@ const getMoviesResolver = async () => {
   return JSON.parse(moviesWithoutShows);
 };
 
-const getMovieByIdResolver = async id => {
+const getMovieByIdResolver = async (id) => {
   const movies = await client.redis.get('moviesWithoutShows');
   const moviesParsed = JSON.parse(movies);
 

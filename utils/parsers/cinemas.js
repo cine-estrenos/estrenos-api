@@ -19,8 +19,8 @@ const parseCinemaFeatures = (features = []) =>
 
 const parseBuses = (buses = '') => buses.split(' / ').filter(Boolean);
 
-const parseCinemas = cinemas => {
-  const parsedCinemas = cinemas.map(cinema => {
+const parseCinemas = (cinemas) => {
+  const parsedCinemas = cinemas.map((cinema) => {
     const { id, description, name, address, features, decLatitude, decLongitude, urlGoogleMaps, buses } = cinema;
 
     return {

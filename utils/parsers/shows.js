@@ -9,7 +9,7 @@ const createTicketsLink = (cinemaId, sessionId, featureId) => {
   return `${baseUrl}/?CinemaId=${cinemaId}&SessionId=${sessionId}&FeatureId=${featureId}`;
 };
 
-const parseShows = movieList => {
+const parseShows = (movieList) => {
   const showsParsed = movieList.map(({ format, version, cinemaList }) => {
     const cinemaWithShows = cinemaList.map(({ id: cinemaId, sessionList }) => {
       const shows = sessionList.map(({ id: sessionId, feature: featureId, dtm: timestamp, seats }) => ({

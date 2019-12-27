@@ -1,0 +1,48 @@
+{
+  "projectName": "estrenos-api",
+  "projectOwner": "lndgalante",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "lndgalante",
+      "name": "Leonardo Galante",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2475912?v=4",
+      "profile": "https://leonardogalante.com",
+      "contributions": [
+        "code",
+        "maintenance",
+        "review"
+      ]
+    },
+    {
+      "login": "hdf1986",
+      "name": "Hugo David Farji",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1130309?v=4",
+      "profile": "https://hugo.farji.me/",
+      "contributions": [
+        "code",
+        "maintenance",
+        "review"
+      ]
+    },
+    {
+      "login": "goncy",
+      "name": "Gonzalo Pozzo",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6494462?v=4",
+      "profile": "http://www.gonzalopozzo.com",
+      "contributions": [
+        "code",
+        "maintenance",
+        "review"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}

@@ -16,8 +16,8 @@ describe('Shows selectors', () => {
             shows: [{ id: '11', name: 'Pepe pompon' }],
           },
         ],
-        '1'
-      )
+        '1',
+      ),
     ).toEqual([{ id: '10', name: 'Pepe pompin' }]);
   });
 
@@ -47,8 +47,8 @@ describe('Shows selectors', () => {
           },
         ],
         '2',
-        '11'
-      )
+        '11',
+      ),
     ).toEqual([{ cinemaId: '11', name: 'Pepe pompon' }]);
   });
 });

@@ -1,7 +1,7 @@
 import client from '../client';
 import { getShowsByMovieId, getShowsByMovieIdAndCinemaId } from '../selectors/shows';
 
-const getShowsByMovieIdResolver = async movieId => {
+const getShowsByMovieIdResolver = async (movieId) => {
   const movies = await client.redis.get('movies');
   const moviesParsed = JSON.parse(movies);
 
