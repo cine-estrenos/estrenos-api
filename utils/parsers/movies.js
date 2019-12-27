@@ -3,26 +3,26 @@ import titleize from 'titleize';
 import parseShows from './shows';
 import getImdbInfo from '../lib/imdb';
 
-const parseCast = cast => {
+const parseCast = (cast) => {
   const parsedCast = cast.reduce(
     (acc, { type, name }) => {
       if (type === 'D') acc.directors.push(name);
       if (type === 'A') acc.actors.push(name);
       return acc;
     },
-    { directors: [], actors: [] }
+    { directors: [], actors: [] },
   );
 
   return parsedCast;
 };
 
-const parseMovies = async movies => {
+const parseMovies = async (movies) => {
   // Remove special or festival movies
   const premieres = movies.filter(({ attributeList }) => !attributeList.includes(2) && !attributeList.includes(3));
 
   // Parse movies to match new structure
   const parsedMovies = premieres
-    .map(premiere => {
+    .map((premiere) => {
       const {
         id,
         name,
@@ -76,14 +76,14 @@ const parseMovies = async movies => {
 
   // Get new high quality posters and more info
   const moviesWithHighQualityPoster = await Promise.all(
-    parsedMovies.map(async movie => {
+    parsedMovies.map(async (movie) => {
       try {
         const imdbInfo = await getImdbInfo(movie.title);
         return { ...movie, ...imdbInfo };
       } catch (error) {
         return movie;
       }
-    })
+    }),
   );
 
   return moviesWithHighQualityPoster;

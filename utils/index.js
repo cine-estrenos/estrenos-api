@@ -11,7 +11,7 @@ const getCinemarkData = async () => {
     const dataInCamelCase = camelcaseKeys(dataInPascalCase, { deep: true });
 
     const movies = await parseMovies(dataInCamelCase.films);
-    const moviesWithoutShows = movies.map(movie => omit(movie, 'shows'));
+    const moviesWithoutShows = movies.map((movie) => omit(movie, 'shows'));
 
     const cinemas = parseCinemas(dataInCamelCase.cinemas);
     const parsedData = { movies, moviesWithoutShows, cinemas };
