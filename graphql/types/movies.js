@@ -27,6 +27,7 @@ export default gql`
     isPremiere: Boolean!
     description: String!
     amazonTrailerUrl: String!
+    youtubeTrailerUrl: String!
   }
 
   extend type Query {

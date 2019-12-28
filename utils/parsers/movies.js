@@ -50,7 +50,7 @@ const parseMovies = async (movies) => {
       const isPremiere = attributeList.includes(0);
 
       const amazonTrailerUrl = urlTrailerAmazon;
-      const [, youtubeTrailerUrl] = urlTrailerYoutube.split('.be/');
+      const [, youtubeTrailerUrl = ''] = urlTrailerYoutube.split('.be/');
 
       const cast = parseCast(personList);
       const shows = parseShows(movieList);
