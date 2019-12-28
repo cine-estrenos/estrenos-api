@@ -49,8 +49,8 @@ const parseMovies = async (movies) => {
       const poster = urlPoster;
       const isPremiere = attributeList.includes(0);
 
-      const amazonTrailerUrl = urlTrailerAmazon;
-      const [, youtubeTrailerUrl = ''] = urlTrailerYoutube.split('.be/');
+      const amazonTrailerUrl = urlTrailerAmazon.replace('http://www.dropbox.com', 'https://dl.dropboxusercontent.com');
+      const youtubeTrailerUrl = urlTrailerYoutube || '';
 
       const cast = parseCast(personList);
       const shows = parseShows(movieList);
