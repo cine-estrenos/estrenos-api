@@ -2,7 +2,10 @@ import { getMoviesResolver, getMovieByIdResolver } from '../../resolvers/movies'
 
 export default {
   Query: {
-    movies: getMoviesResolver,
+    movies: async (_, { limit }) => {
+      const data = await getMoviesResolver();
+      return limit ? data.slice(0, limit) : data;
+    },
     movie: (_, { id }) => getMovieByIdResolver(id),
   },
 };
