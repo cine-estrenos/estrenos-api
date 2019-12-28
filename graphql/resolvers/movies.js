@@ -4,7 +4,9 @@ export default {
   Query: {
     movies: async (_, { limit }) => {
       const data = await getMoviesResolver();
-      return limit ? data.slice(0, limit) : data;
+      const moviesSortedByMostVoted = data.sort((a, b) => b.votes - a.votes);
+
+      return limit ? moviesSortedByMostVoted.slice(0, limit) : moviesSortedByMostVoted;
     },
     movie: (_, { id }) => getMovieByIdResolver(id),
   },

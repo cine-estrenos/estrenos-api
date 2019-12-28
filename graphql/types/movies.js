@@ -16,6 +16,7 @@ export default gql`
   type Movie {
     id: String!
     cast: Cast!
+    votes: String!
     title: String!
     minAge: String!
     length: String!
