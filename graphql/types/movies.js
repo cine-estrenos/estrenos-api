@@ -21,6 +21,7 @@ export default gql`
     minAge: String!
     length: String!
     poster: String!
+    backdrop: String!
     category: Category!
     inCinemas: [String]!
     isPremiere: Boolean!
