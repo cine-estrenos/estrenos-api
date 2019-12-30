@@ -89,7 +89,7 @@ const parseMovies = async (movies) => {
         return { ...movie, ...imdbInfo };
       } catch (error) {
         console.log('TCL: parseMovies -> error', error);
-        return movie;
+        return { ...movie, votes: '0', backdrop: '' };
       }
     }),
   );

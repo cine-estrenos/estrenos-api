@@ -18,6 +18,9 @@
   ],
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=13.5.0"
+  },
   "dependencies": {
     "@sentry/node": "^5.10.2",
     "apollo-server-fastify": "^2.9.15",
