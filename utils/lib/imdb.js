@@ -9,18 +9,19 @@ const getImdbInfo = async (title) => {
   const endpoint = `${baseUrl}?api_key=${apiKey}&query=${encodeURI(title)}${options}`;
 
   const { body: data } = await got(endpoint, { json: true });
-  if (data.total_results === 0 || data.total_results > 1) return;
+  if (data.total_results === 0 || data.total_results > 1) return { votes: '0.0' };
 
   const [movie] = data.results;
-  const { title: name, vote_average: votes, poster_path: posterPath } = movie;
+  const { title: name, vote_average: votes, poster_path: posterPath, backdrop_path: backdropPath } = movie;
 
   const baseImageUrl = 'https://image.tmdb.org/t/p';
   const withWidth = (width) => `w${width}`;
 
+  const backdrop = `${baseImageUrl}/original/${backdropPath}`;
   const poster = `${baseImageUrl}/${withWidth(300)}/${posterPath}`;
   const votesParsed = String(votes).length === 1 ? `${votes}.0` : `${votes}`;
 
-  return { title: name, votes: votesParsed, poster }; // eslint-disable-line
+  return { title: name, votes: votesParsed, poster, backdrop }; // eslint-disable-line
 };
 
 export default getImdbInfo;

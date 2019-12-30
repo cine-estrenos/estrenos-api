@@ -16,19 +16,22 @@ export default gql`
   type Movie {
     id: String!
     cast: Cast!
+    votes: String!
     title: String!
     minAge: String!
     length: String!
     poster: String!
+    backdrop: String!
     category: Category!
     inCinemas: [String]!
     isPremiere: Boolean!
     description: String!
     amazonTrailerUrl: String!
+    youtubeTrailerUrl: String!
   }
 
   extend type Query {
-    movies: [Movie]!
+    movies(limit: Int): [Movie]!
     movie(id: String!): Movie
   }
 `;

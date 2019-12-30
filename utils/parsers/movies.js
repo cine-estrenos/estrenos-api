@@ -2,6 +2,7 @@ import titleize from 'titleize';
 
 import parseShows from './shows';
 import getImdbInfo from '../lib/imdb';
+import emojifier from '../lib/emojis';
 
 const parseCast = (cast) => {
   const parsedCast = cast.reduce(
@@ -36,7 +37,7 @@ const parseMovies = async (movies) => {
         cinemaList,
         attributeList,
         movieList,
-        category,
+        category: categoryValue,
       } = premiere;
 
       const title = titleize(name);
@@ -48,11 +49,14 @@ const parseMovies = async (movies) => {
       const poster = urlPoster;
       const isPremiere = attributeList.includes(0);
 
-      const amazonTrailerUrl = urlTrailerAmazon;
-      const [, youtubeTrailerUrl] = urlTrailerYoutube.split('.be/');
+      const amazonTrailerUrl = urlTrailerAmazon.replace('http://www.dropbox.com', 'https://dl.dropboxusercontent.com');
+      const youtubeTrailerUrl = urlTrailerYoutube || '';
 
       const cast = parseCast(personList);
       const shows = parseShows(movieList);
+
+      const emoji = emojifier(categoryValue);
+      const category = { value: categoryValue, emoji };
 
       const movie = {
         id,
