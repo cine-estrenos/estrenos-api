@@ -14,7 +14,7 @@ import { getMovieByIdController, getMoviesController } from './rest/controllers/
 import { getShowsByMovieIdController, getShowsByMovieIdAndCinemaIdController } from './rest/controllers/shows';
 
 // Load env variables
-dotenv.config();
+if (process.env.NODE_ENV === 'development') dotenv.config();
 
 // Load Sentry
 if (process.env.NODE_ENV === 'production') Sentry.init({ dsn: process.env.SENTRY_DSN });

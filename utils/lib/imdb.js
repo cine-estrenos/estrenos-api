@@ -4,6 +4,7 @@ const getImdbInfo = async (title) => {
   const currentYear = new Date().getFullYear();
 
   const apiKey = process.env.MOVIEDB_APIKEY;
+  console.log('TCL: getImdbInfo -> apiKey', apiKey);
   const baseUrl = 'https://api.themoviedb.org/3/search/movie';
   const options = `&page=1&include_adult=false&year=${currentYear}`;
   const endpoint = `${baseUrl}?api_key=${apiKey}&query=${encodeURI(title)}${options}`;
