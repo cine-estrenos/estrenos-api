@@ -49,7 +49,9 @@ const parseMovies = async (movies) => {
       const poster = urlPoster;
       const isPremiere = attributeList.includes(0);
 
-      const amazonTrailerUrl = urlTrailerAmazon.replace('http://www.dropbox.com', 'https://dl.dropboxusercontent.com');
+      const amazonTrailerUrl = urlTrailerAmazon
+        .replace('http://www.dropbox.com', 'https://dl.dropboxusercontent.com')
+        .replace('https://www.dropbox.com', 'https://dl.dropboxusercontent.com');
       const youtubeTrailerUrl = urlTrailerYoutube || '';
 
       const cast = parseCast(personList);
