@@ -83,8 +83,10 @@ const parseMovies = async (movies) => {
     parsedMovies.map(async (movie) => {
       try {
         const imdbInfo = await getImdbInfo(movie.title);
+        console.log('TCL: parseMovies -> imdbInfo', imdbInfo);
         return { ...movie, ...imdbInfo };
       } catch (error) {
+        console.log('TCL: parseMovies -> error', error);
         return movie;
       }
     }),
