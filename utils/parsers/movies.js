@@ -49,7 +49,9 @@ const parseMovies = async (movies) => {
       const poster = urlPoster;
       const isPremiere = attributeList.includes(0);
 
-      const amazonTrailerUrl = urlTrailerAmazon.replace('http://www.dropbox.com', 'https://dl.dropboxusercontent.com');
+      const amazonTrailerUrl = urlTrailerAmazon
+        .replace('http://www.dropbox.com', 'https://dl.dropboxusercontent.com')
+        .replace('https://www.dropbox.com', 'https://dl.dropboxusercontent.com');
       const youtubeTrailerUrl = urlTrailerYoutube || '';
 
       const cast = parseCast(personList);
@@ -83,8 +85,10 @@ const parseMovies = async (movies) => {
     parsedMovies.map(async (movie) => {
       try {
         const imdbInfo = await getImdbInfo(movie.title);
+        console.log('TCL: parseMovies -> imdbInfo', imdbInfo);
         return { ...movie, ...imdbInfo };
       } catch (error) {
+        console.log('TCL: parseMovies -> error', error);
         return movie;
       }
     }),

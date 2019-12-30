@@ -9,6 +9,7 @@ const getImdbInfo = async (title) => {
   const endpoint = `${baseUrl}?api_key=${apiKey}&query=${encodeURI(title)}${options}`;
 
   const { body: data } = await got(endpoint, { json: true });
+  console.log('TCL: getImdbInfo -> data', data);
   if (data.total_results === 0 || data.total_results > 1) return {};
 
   const [movie] = data.results;
