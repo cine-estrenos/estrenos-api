@@ -4,14 +4,12 @@ const getImdbInfo = async (title) => {
   const currentYear = new Date().getFullYear();
 
   const apiKey = process.env.MOVIEDB_APIKEY;
-  console.log('TCL: getImdbInfo -> apiKey', apiKey);
   const baseUrl = 'https://api.themoviedb.org/3/search/movie';
   const options = `&page=1&include_adult=false&year=${currentYear}`;
   const endpoint = `${baseUrl}?api_key=${apiKey}&query=${encodeURI(title)}${options}`;
 
   const response = await fetch(endpoint);
   const data = await response.json();
-  console.log('TCL: getImdbInfo -> data', data);
   if (data.total_results === 0 || data.total_results > 1) return { votes: '0', backdrop: '' };
 
   const [movie] = data.results;
