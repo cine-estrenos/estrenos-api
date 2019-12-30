@@ -1,4 +1,4 @@
-import got from 'got';
+import fetch from 'node-fetch';
 
 const getImdbInfo = async (title) => {
   const currentYear = new Date().getFullYear();
@@ -8,9 +8,9 @@ const getImdbInfo = async (title) => {
   const options = `&page=1&include_adult=false&year=${currentYear}`;
   const endpoint = `${baseUrl}?api_key=${apiKey}&query=${encodeURI(title)}${options}`;
 
-  const { body: data } = await got(endpoint, { json: true });
-  console.log('TCL: getImdbInfo -> data', data);
-  if (data.total_results === 0 || data.total_results > 1) return {};
+  const response = await fetch(endpoint);
+  const data = await response.json();
+  if (data.total_results === 0 || data.total_results > 1) return { votes: '0', backdrop: '' };
 
   const [movie] = data.results;
   const { title: name, vote_average: votes, poster_path: posterPath, backdrop_path: backdropPath } = movie;

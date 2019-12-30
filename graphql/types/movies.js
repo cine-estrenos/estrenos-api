@@ -16,12 +16,12 @@ export default gql`
   type Movie {
     id: String!
     cast: Cast!
-    votes: String
+    votes: String!
     title: String!
     minAge: String!
     length: String!
     poster: String!
-    backdrop: String
+    backdrop: String!
     category: Category!
     inCinemas: [String]!
     isPremiere: Boolean!
