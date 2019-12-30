@@ -10,6 +10,7 @@ const getImdbInfo = async (title) => {
 
   const response = await fetch(endpoint);
   const data = await response.json();
+  console.log('TCL: getImdbInfo -> data', data);
   if (data.total_results === 0 || data.total_results > 1) return { votes: '0', backdrop: '' };
 
   const [movie] = data.results;
