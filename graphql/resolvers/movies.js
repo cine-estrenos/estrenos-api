@@ -2,11 +2,14 @@ import { getMoviesResolver, getMovieByIdResolver } from '../../resolvers/movies'
 
 export default {
   Query: {
-    movies: async (_, { limit }) => {
+    movies: async (_, { limit, cinemaId }) => {
       const data = await getMoviesResolver();
       const moviesSortedByMostVoted = data.sort((a, b) => b.votes - a.votes);
 
-      return limit ? moviesSortedByMostVoted.slice(0, limit) : moviesSortedByMostVoted;
+      if (limit) return moviesSortedByMostVoted.slice(0, limit);
+      if (cinemaId) return moviesSortedByMostVoted.filter(({ inCinemas }) => inCinemas.includes(cinemaId));
+
+      return moviesSortedByMostVoted;
     },
     movie: (_, { id }) => getMovieByIdResolver(id),
   },
