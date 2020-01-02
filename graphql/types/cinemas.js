@@ -17,6 +17,7 @@ export default gql`
     id: String!
     description: String!
     name: String!
+    chain: String!
     coordinates: Coordinates!
     tags: [Tag]!
     busses: [String]!
