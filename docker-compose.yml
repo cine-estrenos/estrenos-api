@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-    command: npm start
+    command: npm run dev
     links:
       - redis:redis
     env_file:
@@ -19,7 +19,7 @@ services:
     container_name: estrenos-api
 
   redis:
-    image: redis
+    image: redis:alpine
     restart: always
     ports:
       - '6379:6379'
