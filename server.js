@@ -6,7 +6,7 @@ import client from './client';
 
 // Plugins
 import graphqlEndpoint from './plugins/apollo';
-import cinemasScrappersCron from './plugins/cinema-scrappers';
+import cinemasScrappersCron from './plugins/cinemas-scrappers';
 
 // Controllers
 import getCinemasController from './rest/controllers/cinemas';

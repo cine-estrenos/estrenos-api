@@ -9,14 +9,14 @@ import { getCinemaId, cinemas } from './cinemas';
 import emojifier from '../../lib/emojis';
 import { parseCast } from '../../lib/movies';
 
-const imaxCastTypes = {
+const showcaseCastTypes = {
   actor: 'Actor',
   director: 'Director',
 };
 
-export const imaxCinemas = cinemas;
+export const showcaseCinemas = cinemas;
 
-export const scrapImaxMovies = async (html) => {
+export const scrapShowcaseMovies = async (html) => {
   const $ = cheerio.load(html);
   const $movies = $('#cartelera_actual .boxfilm');
 
@@ -91,7 +91,7 @@ export const scrapImaxMovies = async (html) => {
           return { name, type: role };
         })
         .get();
-      const cast = parseCast(rawCast, imaxCastTypes.actor, imaxCastTypes.director);
+      const cast = parseCast(rawCast, showcaseCastTypes.actor, showcaseCastTypes.director);
 
       /* Get dates */
       const $dates = $('.showtime-dates .scroll__content .date');

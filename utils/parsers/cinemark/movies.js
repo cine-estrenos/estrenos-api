@@ -10,8 +10,11 @@ const cinemarkCastTypes = {
 };
 
 const parseMovies = async (movies) => {
+  // Remove special movies
+  const premieres = movies.filter(({ attributeList }) => !attributeList.includes(2));
+
   // Parse movies to match new structure
-  const parsedMovies = movies
+  const parsedMovies = premieres
     .map((rawMovie) => {
       const {
         id,

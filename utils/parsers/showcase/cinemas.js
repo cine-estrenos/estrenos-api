@@ -9,6 +9,8 @@ export const CINEMAS = {
   'Showcase Villa Allende': '232',
 };
 
-export const cinemas = Object.entries(CINEMAS).map(([name, id]) => ({ id, name, chain: 'IMAX' }));
+const removeChain = (name = '') => name.replace('Showcase ', '');
+
+export const cinemas = Object.entries(CINEMAS).map(([name, id]) => ({ id, name: removeChain(name), chain: 'IMAX' }));
 
 export const getCinemaId = (cinemaName) => CINEMAS[cinemaName] || '';

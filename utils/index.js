@@ -1,16 +1,16 @@
 import fetch from 'node-fetch';
 import camelcaseKeys from 'camelcase-keys';
 
-import { scrapImaxMovies, imaxCinemas } from './parsers/imax';
+import { scrapShowcaseMovies, showcaseCinemas } from './parsers/showcase';
 import { parseCinemas, parseMovies } from './parsers/cinemark';
 
-export const getImaxData = async () => {
+export const getShowcaseData = async () => {
   try {
     const res = await fetch('https://imax.todoshowcase.com');
     const data = await res.text();
 
-    const movies = await scrapImaxMovies(data);
-    const parsedData = { movies, cinemas: imaxCinemas };
+    const movies = await scrapShowcaseMovies(data);
+    const parsedData = { movies, cinemas: showcaseCinemas };
 
     return { data: parsedData, error: null };
   } catch (error) {
