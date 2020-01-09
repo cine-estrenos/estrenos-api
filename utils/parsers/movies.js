@@ -3,27 +3,12 @@ import titleize from 'titleize';
 import parseShows from './shows';
 import getImdbInfo from '../lib/imdb';
 import emojifier from '../lib/emojis';
-
-const parseCast = (cast) => {
-  const parsedCast = cast.reduce(
-    (acc, { type, name }) => {
-      if (type === 'D') acc.directors.push(name);
-      if (type === 'A') acc.actors.push(name);
-      return acc;
-    },
-    { directors: [], actors: [] },
-  );
-
-  return parsedCast;
-};
+import { parseLength, parseCast, cinemarkCastTypes } from '../lib/movies';
 
 const parseMovies = async (movies) => {
-  // Remove special or festival movies
-  const premieres = movies.filter(({ attributeList }) => !attributeList.includes(2) && !attributeList.includes(3));
-
   // Parse movies to match new structure
-  const parsedMovies = premieres
-    .map((premiere) => {
+  const parsedMovies = movies
+    .map((rawMovie) => {
       const {
         id,
         name,
@@ -32,48 +17,50 @@ const parseMovies = async (movies) => {
         duration,
         urlPoster,
         urlTrailerAmazon,
-        urlTrailerYoutube,
         personList,
         cinemaList,
         attributeList,
         movieList,
-        category: categoryValue,
-      } = premiere;
+        category: genre,
+      } = rawMovie;
 
       const title = titleize(name);
       const minAge = rating.split(' ')[0];
 
-      const length = `${duration} minutos`;
+      const length = parseLength(duration);
       const inCinemas = cinemaList.sort((a, b) => a - b).map(String);
 
       const poster = urlPoster;
-      const isPremiere = attributeList.includes(0);
+      const isPremiere = attributeList.includes(0) ? 'Estreno' : '';
 
-      const amazonTrailerUrl = urlTrailerAmazon
+      const trailer = urlTrailerAmazon
         .replace('http://www.dropbox.com', 'https://dl.dropboxusercontent.com')
         .replace('https://www.dropbox.com', 'https://dl.dropboxusercontent.com');
-      const youtubeTrailerUrl = urlTrailerYoutube || '';
 
-      const cast = parseCast(personList);
+      const cast = parseCast(personList, cinemarkCastTypes.director, cinemarkCastTypes.actor);
       const shows = parseShows(movieList);
 
-      const emoji = emojifier(categoryValue);
-      const category = { value: categoryValue, emoji };
+      const isFestival = attributeList.includes(3);
+      const festival = isFestival ? { value: 'Festival', emoji: emojifier('Festival') } : null;
+
+      const emoji = emojifier(genre);
+      const genres = [{ value: genre, emoji }, festival].filter(Boolean);
+
+      const tags = [isPremiere].filter(Boolean);
 
       const movie = {
         id,
         cast,
+        tags,
         shows,
         title,
         minAge,
         length,
         poster,
-        category,
+        genres,
+        trailer,
         inCinemas,
-        isPremiere,
         description,
-        amazonTrailerUrl,
-        youtubeTrailerUrl,
       };
 
       return movie;
