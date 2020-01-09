@@ -1,13 +1,3 @@
-export const cinemarkCastTypes = {
-  actor: 'A',
-  director: 'D',
-};
-
-export const imaxCastTypes = {
-  actor: 'Actor',
-  director: 'Director',
-};
-
 export const parseCast = (cast, actorType, directorType) => {
   const parsedCast = cast.reduce(
     (acc, { type, name }) => {

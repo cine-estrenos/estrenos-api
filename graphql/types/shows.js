@@ -4,7 +4,7 @@ const { gql } = ApolloServerFastify;
 
 export default gql`
   type Shows {
-    seats: Int!
+    isSellAvailable: Boolean
     cinemaId: String!
     format: String!
     version: String!

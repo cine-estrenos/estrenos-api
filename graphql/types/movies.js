@@ -14,7 +14,8 @@ export default gql`
   }
 
   type Movie {
-    id: String!
+    ids: [String]!
+    imdbId: String
     cast: Cast!
     votes: String!
     title: String!
@@ -26,7 +27,7 @@ export default gql`
     tags: [String]!
     inCinemas: [String]!
     description: String!
-    trailer: String!
+    trailer: String
   }
 
   extend type Query {

@@ -13,6 +13,8 @@ const emojisGenres = {
   Fantasía: '🌈',
   Festival: '🎪',
   Familiar: '👪',
+  Musical: '🎵',
+  'Ciencia Ficción': '👽',
 };
 
 const emojifier = (genre) => emojisGenres[genre] || '';

@@ -1,9 +1,13 @@
 import titleize from 'titleize';
 
 import parseShows from './shows';
-import getImdbInfo from '../lib/imdb';
-import emojifier from '../lib/emojis';
-import { parseLength, parseCast, cinemarkCastTypes } from '../lib/movies';
+import emojifier from '../../lib/emojis';
+import { parseLength, parseCast } from '../../lib/movies';
+
+const cinemarkCastTypes = {
+  actor: 'A',
+  director: 'D',
+};
 
 const parseMovies = async (movies) => {
   // Parse movies to match new structure
@@ -49,7 +53,7 @@ const parseMovies = async (movies) => {
       const tags = [isPremiere].filter(Boolean);
 
       const movie = {
-        id,
+        ids: [id],
         cast,
         tags,
         shows,
@@ -67,19 +71,7 @@ const parseMovies = async (movies) => {
     })
     .sort((a, b) => b.isPremiere - a.isPremiere);
 
-  // Get new high quality posters and more info
-  const moviesWithHighQualityPoster = await Promise.all(
-    parsedMovies.map(async (movie) => {
-      try {
-        const imdbInfo = await getImdbInfo(movie.title);
-        return { ...movie, ...imdbInfo };
-      } catch (error) {
-        return { ...movie, votes: '0', backdrop: '' };
-      }
-    }),
-  );
-
-  return moviesWithHighQualityPoster;
+  return parsedMovies;
 };
 
 export default parseMovies;
