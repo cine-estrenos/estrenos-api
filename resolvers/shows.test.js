@@ -5,7 +5,7 @@ jest.mock('../client', () => mockClient);
 
 describe('Shows resolvers', () => {
   it('getShowsByMovieIdResolver', async () => {
-    mockClient.mockGet([{ id: '1', name: 'movie', shows: [{ name: 'pepe pompin' }] }]);
+    mockClient.mockGet([{ ids: ['1'], name: 'movie', shows: [{ name: 'pepe pompin' }] }]);
 
     expect(await getShowsByMovieIdResolver('1')).toEqual([{ name: 'pepe pompin' }]);
   });
@@ -13,7 +13,7 @@ describe('Shows resolvers', () => {
   it('getShowsByMovieIdAndCinemaIdResolver', async () => {
     mockClient.mockGet([
       {
-        id: '1',
+        ids: ['1'],
         name: 'movie',
         shows: [{ name: 'pepe pompin', cinemaId: '2020' }],
       },

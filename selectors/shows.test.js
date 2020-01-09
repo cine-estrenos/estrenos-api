@@ -6,12 +6,12 @@ describe('Shows selectors', () => {
       getShowsByMovieId(
         [
           {
-            id: '1',
+            ids: ['1'],
             name: 'Movie 1',
             shows: [{ id: '10', name: 'Pepe pompin' }],
           },
           {
-            id: '2',
+            ids: ['2'],
             name: 'Movie 2',
             shows: [{ id: '11', name: 'Pepe pompon' }],
           },
@@ -26,7 +26,7 @@ describe('Shows selectors', () => {
       getShowsByMovieIdAndCinemaId(
         [
           {
-            id: '1',
+            ids: ['1'],
             name: 'Movie 1',
             shows: [
               {
@@ -36,7 +36,7 @@ describe('Shows selectors', () => {
             ],
           },
           {
-            id: '2',
+            ids: ['2'],
             name: 'Movie 2',
             shows: [
               {
