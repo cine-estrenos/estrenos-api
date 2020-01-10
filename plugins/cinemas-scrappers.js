@@ -32,12 +32,12 @@ export default fp(function cinemasScrappersCron(fastify, opts, next) {
     if (showcaseError) fastify.log.error(showcaseError);
     if (cinemarkError) fastify.log.error(cinemarkError);
 
-    // Get TMDB info like poster, backdrop, and votes
-    const showcaseMoviesWithTmdbInfo = await getMoviesWithTmdbInfo(showcaseData.movies);
-    const cinemarkMoviesWithTmdbInfo = await getMoviesWithTmdbInfo(cinemarkData.movies);
-
     // Merge all chain movies
-    const movies = mergeChainsMovies([cinemarkMoviesWithTmdbInfo, showcaseMoviesWithTmdbInfo]);
+    const chainsMovies = [showcaseData.movies, cinemarkData.movies];
+    const mergedMovies = mergeChainsMovies(chainsMovies);
+
+    // Get TMDB info like poster, backdrop, and votes
+    const movies = await getMoviesWithTmdbInfo(mergedMovies);
 
     // Merge shows
     const shows = R.mergeDeepWith(R.concat, showcaseData.shows, cinemarkData.shows);
@@ -47,9 +47,6 @@ export default fp(function cinemasScrappersCron(fastify, opts, next) {
 
     // Create entries array
     const data = Object.entries({ movies, shows, cinemas });
-
-    // Remove old data
-    ['movies', 'shows', 'cinemas'].forEach((key) => fastify.redis.del(key));
 
     // Save to Redis
     data.forEach(([key, value]) => fastify.redis.set(key, JSON.stringify(value)));
