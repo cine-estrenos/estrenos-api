@@ -15,6 +15,7 @@ const emojisGenres = {
   Familiar: '👪',
   Musical: '🎵',
   'Ciencia Ficción': '👽',
+  Infantil: '👶',
 };
 
 const emojifier = (genre) => emojisGenres[genre] || '';

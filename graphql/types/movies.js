@@ -14,7 +14,7 @@ export default gql`
   }
 
   type Movie {
-    ids: [String]!
+    id: String!
     imdbId: String
     cast: Cast!
     votes: String!

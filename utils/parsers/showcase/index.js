@@ -5,18 +5,18 @@ import cheerio from 'cheerio';
 import fetch from 'node-fetch';
 import titleize from 'titleize';
 
+// Cinemas
 import { getCinemaId, cinemas } from './cinemas';
-import emojifier from '../../lib/emojis';
-import { parseCast } from '../../lib/movies';
 
-const showcaseCastTypes = {
-  actor: 'Actor',
-  director: 'Director',
-};
+// Lib
+import emojifier from '../../lib/emojis';
+import { parseCast, createUniqueId } from '../../lib/movies';
+
+const showcaseCastTypes = { actor: 'Actor', director: 'Director' };
 
 export const showcaseCinemas = cinemas;
 
-export const scrapShowcaseMovies = async (html) => {
+export const scrapShowcaseMoviesAndShows = async (html) => {
   const $ = cheerio.load(html);
   const $movies = $('#cartelera_actual .boxfilm');
 
@@ -44,6 +44,8 @@ export const scrapShowcaseMovies = async (html) => {
     .get();
 
   /* Get all movies specific info: dates, and cinemas */
+  const shows = {};
+
   const moviesData = await Promise.all(
     movies.map(async (movie) => {
       const { link, poster, tags } = movie;
@@ -51,13 +53,13 @@ export const scrapShowcaseMovies = async (html) => {
       const data = await res.text();
 
       const $ = cheerio.load(data);
-
-      const id = link.split('-').pop();
       const inCinemasSet = new Set();
 
       const title = $('.movie_name h1')
         .text()
         .trim();
+      const uniqueId = createUniqueId(title);
+
       const [minAge, length] = $('.top__details')
         .text()
         .trim()
@@ -172,11 +174,13 @@ export const scrapShowcaseMovies = async (html) => {
         }),
       );
 
-      const shows = rawShows.flat(2);
       const inCinemas = [...inCinemasSet];
 
+      const movieShows = rawShows.flat(2);
+      shows[uniqueId] = [...(shows[uniqueId] || []), ...movieShows];
+
       const completeMovie = {
-        ids: [id],
+        id: uniqueId,
         cast,
         tags,
         title,
@@ -187,11 +191,10 @@ export const scrapShowcaseMovies = async (html) => {
         trailer,
         inCinemas,
         description,
-        shows,
       };
       return completeMovie;
     }),
   );
 
-  return moviesData;
+  return { movies: moviesData, shows };
 };

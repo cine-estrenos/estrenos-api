@@ -5,13 +5,13 @@ describe('Movies selectors', () => {
     expect(
       getMovieById(
         [
-          { ids: ['1'], name: 'Movie 1' },
-          { ids: ['2'], name: 'Movie 2' },
+          { id: '1', name: 'Movie 1' },
+          { id: '2', name: 'Movie 2' },
         ],
         '1',
       ),
     ).toEqual({
-      ids: ['1'],
+      id: '1',
       name: 'Movie 1',
     });
   });

@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@sentry/node": "^5.11.0",
-    "apollo-server-fastify": "^2.9.15",
+    "apollo-server-fastify": "^2.9.16",
     "camelcase-keys": "^6.1.1",
     "cheerio": "^1.0.0-rc.3",
     "dayjs": "^1.8.19",
@@ -34,7 +34,9 @@
     "fastify-helmet": "^3.0.2",
     "fastify-plugin": "^1.6.0",
     "fastify-redis": "^3.1.1",
+    "get-clean-string": "^2.2.0",
     "graphql": "^14.5.8",
+    "hasha": "^5.1.0",
     "node-cron": "^2.0.3",
     "node-fetch": "^2.6.0",
     "ramda": "^0.26.1",
@@ -52,10 +54,10 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-jest": "^23.3.0",
+    "eslint-plugin-jest": "^23.4.0",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-promise": "^4.2.1",
-    "husky": "^4.0.3",
+    "husky": "^4.0.6",
     "jest": "^24.9.0",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1"
@@ -64,6 +66,7 @@
     "start": "node --experimental-modules --es-module-specifier-resolution=node server.js",
     "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node server.js",
     "test": "jest --no-cache",
+    "test:watch": "jest --no-cache --watch",
     "lint": "eslint '**/*.js' --fix"
   },
   "husky": {

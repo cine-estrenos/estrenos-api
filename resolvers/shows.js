@@ -2,17 +2,17 @@ import client from '../client';
 import { getShowsByMovieId, getShowsByMovieIdAndCinemaId } from '../selectors/shows';
 
 const getShowsByMovieIdResolver = async (movieId) => {
-  const movies = await client.redis.get('movies');
-  const moviesParsed = JSON.parse(movies);
+  const shows = await client.redis.get('shows');
+  const showsParsed = JSON.parse(shows);
 
-  return getShowsByMovieId(moviesParsed, movieId);
+  return getShowsByMovieId(showsParsed, movieId);
 };
 
 const getShowsByMovieIdAndCinemaIdResolver = async (movieId, cinemaId) => {
-  const movies = await client.redis.get('movies');
-  const moviesParsed = JSON.parse(movies);
+  const shows = await client.redis.get('shows');
+  const showsParsed = JSON.parse(shows);
 
-  return getShowsByMovieIdAndCinemaId(moviesParsed, movieId, cinemaId);
+  return getShowsByMovieIdAndCinemaId(showsParsed, movieId, cinemaId);
 };
 
 export { getShowsByMovieIdResolver, getShowsByMovieIdAndCinemaIdResolver };

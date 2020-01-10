@@ -1,23 +1,25 @@
 import titleize from 'titleize';
 
+// Shows
 import parseShows from './shows';
+
+// Lib
 import emojifier from '../../lib/emojis';
-import { parseLength, parseCast } from '../../lib/movies';
+import { parseLength, parseCast, createUniqueId } from '../../lib/movies';
 
-const cinemarkCastTypes = {
-  actor: 'A',
-  director: 'D',
-};
+const cinemarkCastTypes = { actor: 'A', director: 'D' };
 
-const parseMovies = async (movies) => {
+const parseMoviesAndShows = (movies) => {
   // Remove special movies
   const premieres = movies.filter(({ attributeList }) => !attributeList.includes(2));
+
+  // Shows map
+  const shows = {};
 
   // Parse movies to match new structure
   const parsedMovies = premieres
     .map((rawMovie) => {
       const {
-        id,
         name,
         rating,
         description,
@@ -39,13 +41,13 @@ const parseMovies = async (movies) => {
 
       const poster = urlPoster;
       const isPremiere = attributeList.includes(0) ? 'Estreno' : '';
+      const tags = [isPremiere].filter(Boolean);
 
       const trailer = urlTrailerAmazon
         .replace('http://www.dropbox.com', 'https://dl.dropboxusercontent.com')
         .replace('https://www.dropbox.com', 'https://dl.dropboxusercontent.com');
 
       const cast = parseCast(personList, cinemarkCastTypes.director, cinemarkCastTypes.actor);
-      const shows = parseShows(movieList);
 
       const isFestival = attributeList.includes(3);
       const festival = isFestival ? { value: 'Festival', emoji: emojifier('Festival') } : null;
@@ -53,13 +55,14 @@ const parseMovies = async (movies) => {
       const emoji = emojifier(genre);
       const genres = [{ value: genre, emoji }, festival].filter(Boolean);
 
-      const tags = [isPremiere].filter(Boolean);
+      const uniqueId = createUniqueId(name);
+      const movieShows = parseShows(movieList);
+      shows[uniqueId] = [...(shows[uniqueId] || []), ...movieShows];
 
       const movie = {
-        ids: [id],
+        id: uniqueId,
         cast,
         tags,
-        shows,
         title,
         minAge,
         length,
@@ -74,7 +77,7 @@ const parseMovies = async (movies) => {
     })
     .sort((a, b) => b.isPremiere - a.isPremiere);
 
-  return parsedMovies;
+  return { movies: parsedMovies, shows };
 };
 
-export default parseMovies;
+export default parseMoviesAndShows;

@@ -4,51 +4,44 @@ describe('Shows selectors', () => {
   it('getShowsByMovieId', () => {
     expect(
       getShowsByMovieId(
-        [
-          {
-            ids: ['1'],
+        {
+          1: {
             name: 'Movie 1',
             shows: [{ id: '10', name: 'Pepe pompin' }],
           },
-          {
-            ids: ['2'],
+          2: {
             name: 'Movie 2',
             shows: [{ id: '11', name: 'Pepe pompon' }],
           },
-        ],
+        },
         '1',
       ),
-    ).toEqual([{ id: '10', name: 'Pepe pompin' }]);
+    ).toEqual({
+      name: 'Movie 1',
+      shows: [{ id: '10', name: 'Pepe pompin' }],
+    });
   });
 
   it('getShowsByMovieIdAndCinemaId', () => {
     expect(
       getShowsByMovieIdAndCinemaId(
-        [
-          {
-            ids: ['1'],
-            name: 'Movie 1',
-            shows: [
-              {
-                cinemaId: '10',
-                name: 'Pepe pompin',
-              },
-            ],
-          },
-          {
-            ids: ['2'],
-            name: 'Movie 2',
-            shows: [
-              {
-                cinemaId: '11',
-                name: 'Pepe pompon',
-              },
-            ],
-          },
-        ],
+        {
+          1: [
+            {
+              name: 'Movie 1',
+              cinemaId: '10',
+            },
+          ],
+          2: [
+            {
+              name: 'Movie 2',
+              cinemaId: '11',
+            },
+          ],
+        },
         '2',
         '11',
       ),
-    ).toEqual([{ cinemaId: '11', name: 'Pepe pompon' }]);
+    ).toEqual([{ cinemaId: '11', name: 'Movie 2' }]);
   });
 });

@@ -1,3 +1,4 @@
+// Resolvers
 import { getMoviesResolver, getMovieByIdResolver } from '../../resolvers/movies';
 
 const getMoviesController = getMoviesResolver;

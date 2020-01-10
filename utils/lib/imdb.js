@@ -1,11 +1,5 @@
 import fetch from 'node-fetch';
 
-const idFromTitle = (title) =>
-  [...title.toLowerCase()]
-    .map((char) => char.charCodeAt(0))
-    .slice(0, 6)
-    .join('');
-
 const getImdbInfo = async (title) => {
   const currentYear = new Date().getFullYear();
 
@@ -16,10 +10,10 @@ const getImdbInfo = async (title) => {
 
   const response = await fetch(endpoint);
   const data = await response.json();
-  if (data.total_results === 0) return { imdbId: idFromTitle(title), votes: '0', backdrop: '' };
+  if (data.total_results === 0) return { votes: '0', backdrop: '' };
 
   const [movie] = data.results;
-  const { id, title: name, vote_average: votes, poster_path: posterPath, backdrop_path: backdropPath } = movie;
+  const { vote_average: votes, poster_path: posterPath, backdrop_path: backdropPath } = movie;
 
   const baseImageUrl = 'https://image.tmdb.org/t/p';
   const withWidth = (width) => `w${width}`;
@@ -28,7 +22,7 @@ const getImdbInfo = async (title) => {
   const poster = `${baseImageUrl}/${withWidth(300)}/${posterPath}`;
   const votesParsed = String(votes).length === 1 ? `${votes}.0` : `${votes}`;
 
-  return { imdbId: String(id), title: name, votes: votesParsed, poster, backdrop }; // eslint-disable-line
+  return { votes: votesParsed, poster, backdrop }; // eslint-disable-line
 };
 
 // Get new high quality posters and more info

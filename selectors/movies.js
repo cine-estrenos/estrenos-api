@@ -1,3 +1,3 @@
-const getMovieById = (movies, movieId) => movies.find(({ ids }) => ids.includes(movieId));
+const getMovieById = (movies, movieId) => movies.find(({ id }) => id === movieId);
 
 export default getMovieById;

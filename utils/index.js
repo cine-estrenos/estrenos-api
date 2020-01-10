@@ -1,16 +1,16 @@
 import fetch from 'node-fetch';
 import camelcaseKeys from 'camelcase-keys';
 
-import { scrapShowcaseMovies, showcaseCinemas } from './parsers/showcase';
-import { parseCinemas, parseMovies } from './parsers/cinemark';
+import { parseCinemas, parseMoviesAndShows } from './parsers/cinemark';
+import { scrapShowcaseMoviesAndShows, showcaseCinemas } from './parsers/showcase';
 
 export const getShowcaseData = async () => {
   try {
     const res = await fetch('https://imax.todoshowcase.com');
     const data = await res.text();
 
-    const movies = await scrapShowcaseMovies(data);
-    const parsedData = { movies, cinemas: showcaseCinemas };
+    const { movies, shows } = await scrapShowcaseMoviesAndShows(data);
+    const parsedData = { movies, shows, cinemas: showcaseCinemas };
 
     return { data: parsedData, error: null };
   } catch (error) {
@@ -26,10 +26,10 @@ export const getCinemarkData = async () => {
     const dataInPascalCase = JSON.parse(data.slice(15, -1));
     const dataInCamelCase = camelcaseKeys(dataInPascalCase, { deep: true });
 
-    const movies = await parseMovies(dataInCamelCase.films);
+    const { movies, shows } = parseMoviesAndShows(dataInCamelCase.films);
     const cinemas = parseCinemas(dataInCamelCase.cinemas);
 
-    const parsedData = { movies, cinemas };
+    const parsedData = { movies, shows, cinemas };
 
     return { data: parsedData, error: null };
   } catch (error) {

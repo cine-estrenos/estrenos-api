@@ -2,16 +2,15 @@ import client from '../client';
 import getMovieById from '../selectors/movies';
 
 const getMoviesResolver = async () => {
-  const moviesWithoutShows = await client.redis.get('moviesWithoutShows');
-
-  return JSON.parse(moviesWithoutShows);
+  const movies = await client.redis.get('movies');
+  return JSON.parse(movies);
 };
 
 const getMovieByIdResolver = async (id) => {
-  const movies = await client.redis.get('moviesWithoutShows');
-  const moviesParsed = JSON.parse(movies);
+  const movies = await client.redis.get('movies');
+  const parsedMovies = JSON.parse(movies);
 
-  return getMovieById(moviesParsed, id);
+  return getMovieById(parsedMovies, id);
 };
 
 export { getMoviesResolver, getMovieByIdResolver };

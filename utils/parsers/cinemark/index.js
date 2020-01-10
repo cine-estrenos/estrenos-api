@@ -1,4 +1,4 @@
 import parseCinemas from './cinemas';
-import parseMovies from './movies';
+import parseMoviesAndShows from './movies';
 
-export { parseCinemas, parseMovies };
+export { parseCinemas, parseMoviesAndShows };

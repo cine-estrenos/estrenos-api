@@ -1,3 +1,6 @@
+import hasha from 'hasha';
+import clean from 'get-clean-string';
+
 export const parseCast = (cast, actorType, directorType) => {
   const parsedCast = cast.reduce(
     (acc, { type, name }) => {
@@ -19,4 +22,11 @@ export const parseLength = (length) => {
   const rawMinutes = Math.round(minutes);
 
   return `${rawHours}h ${rawMinutes}m`;
+};
+
+export const createUniqueId = (title) => {
+  const parsedTitle = clean()(title.slice(0, 6).toLowerCase());
+  const hash = hasha(parsedTitle).slice(0, 8);
+
+  return hash;
 };

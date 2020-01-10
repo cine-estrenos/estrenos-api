@@ -7,9 +7,7 @@ const getCinemaChain = (name = '') => {
   return name;
 };
 
-const removeChain = (name = '') => {
-  return name.replace('Cinemark ', '').replace('Hoyts ', '');
-};
+const removeChain = (name = '') => name.replace('Cinemark ', '').replace('Hoyts ', '');
 
 const parseCinemaName = (name = '') => {
   const fixedNames = {
