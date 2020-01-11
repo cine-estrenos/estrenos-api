@@ -20,10 +20,12 @@ describe('Shows selectors', () => {
         },
         '1',
       ),
-    ).toEqual({
-      name: 'Movie 1',
-      shows: [{ id: '10', name: 'Pepe pompin' }],
-    });
+    ).toEqual([
+      {
+        name: 'Movie 1',
+        shows: [{ id: '10', name: 'Pepe pompin' }],
+      },
+    ]);
   });
 
   it('getShowsByMovieIdAndCinemaId', () => {
