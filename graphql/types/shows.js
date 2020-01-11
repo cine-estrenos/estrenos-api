@@ -3,7 +3,7 @@ import ApolloServerFastify from 'apollo-server-fastify';
 const { gql } = ApolloServerFastify;
 
 export default gql`
-  type Shows {
+  type Show {
     isSellAvailable: Boolean
     cinemaId: String!
     format: String!
@@ -15,6 +15,6 @@ export default gql`
   }
 
   extend type Query {
-    shows(movieId: String!, cinemaId: String): [Shows]
+    shows(movieId: String!, cinemaId: String): [Show]
   }
 `;

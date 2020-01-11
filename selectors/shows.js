@@ -2,7 +2,7 @@ const getShowsByMovieId = (allShows, movieId) => {
   const shows = allShows[movieId];
   if (!shows) return null;
 
-  return shows;
+  return shows.filter(Boolean);
 };
 
 const getShowsByMovieIdAndCinemaId = (allShows, movieId, cinemaId) => {
