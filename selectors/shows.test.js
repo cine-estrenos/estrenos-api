@@ -5,14 +5,18 @@ describe('Shows selectors', () => {
     expect(
       getShowsByMovieId(
         {
-          1: {
-            name: 'Movie 1',
-            shows: [{ id: '10', name: 'Pepe pompin' }],
-          },
-          2: {
-            name: 'Movie 2',
-            shows: [{ id: '11', name: 'Pepe pompon' }],
-          },
+          1: [
+            {
+              name: 'Movie 1',
+              shows: [{ id: '10', name: 'Pepe pompin' }],
+            },
+          ],
+          2: [
+            {
+              name: 'Movie 2',
+              shows: [{ id: '11', name: 'Pepe pompon' }],
+            },
+          ],
         },
         '1',
       ),
