@@ -1,4 +1,5 @@
 import hasha from 'hasha';
+import slugify from 'slugify';
 import clean from 'get-clean-string';
 
 export const parseCast = (cast, actorType, directorType) => {
@@ -30,3 +31,5 @@ export const createUniqueId = (title) => {
 
   return hash;
 };
+
+export const createSlug = (title) => slugify(clean()(title.toLowerCase()));

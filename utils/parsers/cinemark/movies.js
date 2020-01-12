@@ -5,7 +5,7 @@ import parseShows from './shows';
 
 // Lib
 import emojifier from '../../lib/emojis';
-import { parseLength, parseCast, createUniqueId } from '../../lib/movies';
+import { parseLength, parseCast, createUniqueId, createSlug } from '../../lib/movies';
 
 const cinemarkCastTypes = { actor: 'A', director: 'D' };
 
@@ -47,6 +47,7 @@ const parseMoviesAndShows = (movies) => {
         .replace('http://www.dropbox.com', 'https://dl.dropboxusercontent.com')
         .replace('https://www.dropbox.com', 'https://dl.dropboxusercontent.com');
 
+      const slug = createSlug(title);
       const cast = parseCast(personList, cinemarkCastTypes.director, cinemarkCastTypes.actor);
 
       const isFestival = attributeList.includes(3);
@@ -61,6 +62,7 @@ const parseMoviesAndShows = (movies) => {
 
       const movie = {
         id: uniqueId,
+        slug,
         cast,
         tags,
         title,

@@ -10,7 +10,7 @@ import { getCinemaId, cinemas } from './cinemas';
 
 // Lib
 import emojifier from '../../lib/emojis';
-import { parseCast, createUniqueId } from '../../lib/movies';
+import { parseCast, createUniqueId, createSlug } from '../../lib/movies';
 
 const showcaseCastTypes = { actor: 'Actor', director: 'Director' };
 
@@ -58,6 +58,7 @@ export const scrapShowcaseMoviesAndShows = async (html) => {
       const title = $('.movie_name h1')
         .text()
         .trim();
+      const slug = createSlug(title);
       const uniqueId = createUniqueId(title);
 
       const [minAge, length] = $('.top__details')
@@ -181,6 +182,7 @@ export const scrapShowcaseMoviesAndShows = async (html) => {
 
       const completeMovie = {
         id: uniqueId,
+        slug,
         cast,
         tags,
         title,
