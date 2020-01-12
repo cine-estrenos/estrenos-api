@@ -31,7 +31,7 @@ export default gql`
   }
 
   extend type Query {
-    movies(limit: Int, cinemaId: String): [Movie]!
+    movies(limit: Int, name: String, cinemaId: String): [Movie]!
     movie(id: String!): Movie
   }
 `;

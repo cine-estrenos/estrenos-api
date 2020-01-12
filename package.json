@@ -37,6 +37,7 @@
     "get-clean-string": "^2.2.0",
     "graphql": "^14.5.8",
     "hasha": "^5.1.0",
+    "lodash.merge": "^4.6.2",
     "node-cron": "^2.0.3",
     "node-fetch": "^2.6.0",
     "ramda": "^0.26.1",
