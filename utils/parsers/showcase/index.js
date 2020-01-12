@@ -148,17 +148,19 @@ export const scrapShowcaseMoviesAndShows = async (html) => {
                     .map((_, element) => {
                       const $date = $(element);
 
+                      const id = $date.data('id');
                       const link = $date.attr('href');
                       const time = $date.text().trim();
 
                       return {
-                        isSellAvailable,
-                        cinemaId: getCinemaId(cinema),
+                        id,
+                        time,
+                        link,
                         format,
                         version,
-                        time,
+                        isSellAvailable,
+                        cinemaId: getCinemaId(cinema),
                         date: titleize(dayjs(rawDate).format('dddd D [de] MMMM')),
-                        link,
                       };
                     })
                     .get();
