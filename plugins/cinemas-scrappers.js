@@ -33,7 +33,7 @@ export default fp(function cinemasScrappersCron(fastify, opts, next) {
     if (cinemarkError) fastify.log.error(cinemarkError);
 
     // Merge all chain movies
-    const chainsMovies = [showcaseData.movies, cinemarkData.movies];
+    const chainsMovies = [cinemarkData.movies, showcaseData.movies];
     const mergedMovies = mergeChainsMovies(chainsMovies);
 
     // Get TMDB info like poster, backdrop, and votes
