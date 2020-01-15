@@ -19,7 +19,7 @@
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": ">=13.5.0"
+    "node": ">=13.6.0"
   },
   "dependencies": {
     "@sentry/node": "^5.11.0",
