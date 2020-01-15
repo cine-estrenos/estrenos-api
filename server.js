@@ -5,8 +5,8 @@ import Sentry from '@sentry/node';
 import client from './client';
 
 // Plugins
-import cinemarkCron from './plugins/cinemark';
 import graphqlEndpoint from './plugins/apollo';
+import cinemasScrappersCron from './plugins/cinemas-scrappers';
 
 // Controllers
 import getCinemasController from './rest/controllers/cinemas';
@@ -19,9 +19,11 @@ if (process.env.NODE_ENV === 'development') dotenv.config();
 // Load Sentry
 if (process.env.NODE_ENV === 'production') Sentry.init({ dsn: process.env.SENTRY_DSN });
 
-// Register cron job
-client.register(cinemarkCron);
+// Register GraphQL
 client.register(graphqlEndpoint);
+
+// Register Scrappers cron job
+client.register(cinemasScrappersCron);
 
 // Routes
 client.get('/cinemas', getCinemasController);

@@ -1,10 +1,24 @@
 import fetch from 'node-fetch';
-import omit from 'lodash.omit';
 import camelcaseKeys from 'camelcase-keys';
 
-import { parseCinemas, parseMovies } from './parsers';
+import { parseCinemas, parseMoviesAndShows } from './parsers/cinemark';
+import { scrapShowcaseMoviesAndShows, showcaseCinemas } from './parsers/showcase';
 
-const getCinemarkData = async () => {
+export const getShowcaseData = async () => {
+  try {
+    const res = await fetch('https://imax.todoshowcase.com');
+    const data = await res.text();
+
+    const { movies, shows } = await scrapShowcaseMoviesAndShows(data);
+    const parsedData = { movies, shows, cinemas: showcaseCinemas };
+
+    return { data: parsedData, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
+};
+
+export const getCinemarkData = async () => {
   try {
     const response = await fetch('https://www.cinemarkhoyts.com.ar/billboard.ashx');
     const data = await response.text();
@@ -12,16 +26,13 @@ const getCinemarkData = async () => {
     const dataInPascalCase = JSON.parse(data.slice(15, -1));
     const dataInCamelCase = camelcaseKeys(dataInPascalCase, { deep: true });
 
-    const movies = await parseMovies(dataInCamelCase.films);
-    const moviesWithoutShows = movies.map((movie) => omit(movie, 'shows'));
-
+    const { movies, shows } = parseMoviesAndShows(dataInCamelCase.films);
     const cinemas = parseCinemas(dataInCamelCase.cinemas);
-    const parsedData = { movies, moviesWithoutShows, cinemas };
 
-    return { data: Object.entries(parsedData), error: null };
+    const parsedData = { movies, shows, cinemas };
+
+    return { data: parsedData, error: null };
   } catch (error) {
     return { data: null, error };
   }
 };
-
-export default getCinemarkData;

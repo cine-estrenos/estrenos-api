@@ -12,11 +12,11 @@ const createTicketsLink = (cinemaId, sessionId, featureId) => {
 const parseShows = (movieList) => {
   const showsParsed = movieList.map(({ format, version, cinemaList }) => {
     const cinemaWithShows = cinemaList.map(({ id: cinemaId, sessionList }) => {
-      const shows = sessionList.map(({ id: sessionId, feature: featureId, dtm: timestamp, seats }) => ({
-        seats,
+      const shows = sessionList.map(({ id: sessionId, feature: featureId, dtm: timestamp }) => ({
+        id: sessionId,
         cinemaId: String(cinemaId),
-        format: titleize(format),
         version: titleize(version),
+        format: format.toUpperCase(),
         time: dayjs(timestamp).format('HH[:]mm'),
         date: titleize(dayjs(timestamp).format('dddd D [de] MMMM')),
         link: createTicketsLink(cinemaId, sessionId, featureId),

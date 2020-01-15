@@ -1,17 +1,15 @@
-import getMovieById from './movies';
+const getShowsByMovieId = (allShows, movieId) => {
+  const shows = allShows[movieId];
+  if (!shows) return null;
 
-const getShowsByMovieId = (movies, movieId) => {
-  const movie = getMovieById(movies, movieId);
-  if (!movie) return null;
-
-  return movie.shows;
+  return shows.filter(Boolean);
 };
 
-const getShowsByMovieIdAndCinemaId = (movies, movieId, cinemaId) => {
-  const showsPerMovie = getShowsByMovieId(movies, movieId);
+const getShowsByMovieIdAndCinemaId = (allShows, movieId, cinemaId) => {
+  const showsPerMovie = getShowsByMovieId(allShows, movieId);
   if (!showsPerMovie) return null;
 
-  const showsPerCinema = showsPerMovie.filter(({ cinemaId: id }) => id === cinemaId);
+  const showsPerCinema = Object.values(showsPerMovie).filter((shows) => shows.cinemaId === cinemaId);
   return showsPerCinema;
 };
 

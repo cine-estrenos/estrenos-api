@@ -8,13 +8,15 @@ export default gql`
     actors: [String]!
   }
 
-  type Category {
+  type Genre {
     value: String!
     emoji: String!
   }
 
   type Movie {
     id: String!
+    imdbId: String
+    slug: String!
     cast: Cast!
     votes: String!
     title: String!
@@ -22,16 +24,15 @@ export default gql`
     length: String!
     poster: String!
     backdrop: String!
-    category: Category!
+    genres: [Genre]!
+    tags: [String]!
     inCinemas: [String]!
-    isPremiere: Boolean!
     description: String!
-    amazonTrailerUrl: String!
-    youtubeTrailerUrl: String!
+    trailer: String
   }
 
   extend type Query {
-    movies(limit: Int, cinemaId: String): [Movie]!
+    movies(limit: Int, name: String, cinemaId: String): [Movie]!
     movie(id: String!): Movie
   }
 `;
