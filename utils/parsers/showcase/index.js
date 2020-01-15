@@ -71,7 +71,7 @@ export const scrapShowcaseMoviesAndShows = async (html) => {
         .trim()
         .replace(/\s/g, '')
         .split(',');
-      const genres = rawGengers.map((genre) => ({ genre, emoji: emojifier(genre) }));
+      const genres = rawGengers.map((genre) => ({ value: genre, emoji: emojifier(genre) }));
 
       const description = $('.movie-description')
         .text()
