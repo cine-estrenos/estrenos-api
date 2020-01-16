@@ -2,7 +2,18 @@ import { getShowsByMovieIdResolver, getShowsByMovieIdAndCinemaIdResolver } from 
 
 export default {
   Query: {
-    shows: (_, { movieId, cinemaId }) =>
-      cinemaId ? getShowsByMovieIdAndCinemaIdResolver(movieId, cinemaId) : getShowsByMovieIdResolver(movieId),
+    shows: async (_, { movieId, cinemaId }) => {
+      if (movieId && cinemaId) {
+        const showsInCinema = await getShowsByMovieIdAndCinemaIdResolver(movieId, cinemaId);
+        return showsInCinema;
+      }
+
+      if (movieId) {
+        const showsByMovie = await getShowsByMovieIdResolver(movieId);
+        return showsByMovie;
+      }
+
+      return [];
+    },
   },
 };
