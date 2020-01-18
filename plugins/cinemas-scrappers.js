@@ -1,9 +1,11 @@
-import R from 'ramda';
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
+
 import cron from 'node-cron';
 import fp from 'fastify-plugin';
 
 import getMoviesWithTmdbInfo from '../utils/lib/imdb';
-import { getShowcaseData, getCinemarkData } from '../utils';
+import { getShowcaseData, getCinemarkData, getCinepolisData } from '../utils';
 
 const mergeChainsMovies = (chainsMovies) => {
   const parsedMovies = {};
@@ -25,26 +27,42 @@ const mergeChainsMovies = (chainsMovies) => {
   return Object.values(parsedMovies).sort((a, b) => b.votes - a.votes);
 };
 
+const mergeShows = (chainsShows) => {
+  const allShows = {};
+
+  chainsShows.forEach((chainShow) => {
+    for (const movieId in chainShow) {
+      const movies = [...(allShows[movieId] || []), ...(chainShow[movieId] || [])];
+      allShows[movieId] = movies;
+    }
+  });
+
+  return allShows;
+};
+
 export default fp(function cinemasScrappersCron(fastify, opts, next) {
   const saveCinemasDataToRedis = async () => {
     const { data: showcaseData, error: showcaseError } = await getShowcaseData();
     const { data: cinemarkData, error: cinemarkError } = await getCinemarkData();
+    const { data: cinepolisData, error: cinepolisError } = await getCinepolisData();
 
     if (showcaseError) fastify.log.error(showcaseError);
     if (cinemarkError) fastify.log.error(cinemarkError);
+    if (cinepolisError) fastify.log.error(cinepolisError);
 
     // Merge all chain movies
-    const chainsMovies = [cinemarkData.movies, showcaseData.movies];
+    const chainsMovies = [cinemarkData.movies, showcaseData.movies, cinepolisData.movies];
     const mergedMovies = mergeChainsMovies(chainsMovies);
 
     // Get TMDB info like poster, backdrop, and votes
     const movies = await getMoviesWithTmdbInfo(mergedMovies);
 
     // Merge shows
-    const shows = R.mergeDeepWith(R.concat, showcaseData.shows, cinemarkData.shows);
+    const chainsShows = [showcaseData.shows, cinemarkData.shows, cinepolisData.shows];
+    const shows = mergeShows(chainsShows);
 
     // Merge cinemas
-    const cinemas = [...showcaseData.cinemas, ...cinemarkData.cinemas];
+    const cinemas = [...showcaseData.cinemas, ...cinemarkData.cinemas, ...cinepolisData.cinemas];
 
     // Create entries array
     const data = Object.entries({ movies, shows, cinemas });

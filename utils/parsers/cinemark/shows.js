@@ -1,8 +1,5 @@
 import titleize from 'titleize';
 import dayjs from 'dayjs';
-import 'dayjs/locale/es';
-
-dayjs.locale('es');
 
 const createTicketsLink = (cinemaId, sessionId, featureId) => {
   const baseUrl = 'https://tickets.cinemarkhoyts.com.ar/NSTicketing';

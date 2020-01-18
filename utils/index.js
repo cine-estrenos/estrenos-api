@@ -1,8 +1,10 @@
 import fetch from 'node-fetch';
 import camelcaseKeys from 'camelcase-keys';
 
+// Parsers
 import { parseCinemas, parseMoviesAndShows } from './parsers/cinemark';
 import { scrapShowcaseMoviesAndShows, showcaseCinemas } from './parsers/showcase';
+import { getCinepolisMoviesAndShows, parseCinepolisCinemas } from './parsers/cinepolis';
 
 export const getShowcaseData = async () => {
   try {
@@ -28,6 +30,31 @@ export const getCinemarkData = async () => {
 
     const { movies, shows } = parseMoviesAndShows(dataInCamelCase.films);
     const cinemas = parseCinemas(dataInCamelCase.cinemas);
+
+    const parsedData = { movies, shows, cinemas };
+
+    return { data: parsedData, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
+};
+
+export const getCinepolisData = async () => {
+  try {
+    const BASE_URL = 'https://www.cinepolis.com.ar/api';
+    const endpoints = [`${BASE_URL}/movies`, `${BASE_URL}/complexes`];
+
+    const [rawMovies, rawCinemas] = await Promise.all(
+      endpoints.map(async (endpoint) => {
+        const response = await fetch(endpoint);
+        const data = await response.json();
+
+        return camelcaseKeys(data, { deep: true });
+      }),
+    );
+
+    const { movies, shows } = await getCinepolisMoviesAndShows(rawMovies.data);
+    const cinemas = parseCinepolisCinemas(rawCinemas);
 
     const parsedData = { movies, shows, cinemas };
 

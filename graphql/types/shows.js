@@ -3,6 +3,11 @@ import ApolloServerFastify from 'apollo-server-fastify';
 const { gql } = ApolloServerFastify;
 
 export default gql`
+  type Seats {
+    totalSeats: Int!
+    availableSeats: Int!
+  }
+
   type Show {
     id: String!
     isSellAvailable: Boolean
@@ -13,6 +18,7 @@ export default gql`
     time: String!
     date: String!
     link: String!
+    seats: Seats
   }
 
   extend type Query {
