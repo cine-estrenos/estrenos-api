@@ -10,12 +10,13 @@ const mergeChainsMovies = (chainsMovies) => {
 
   chainsMovies.forEach((chainMovies) => {
     chainMovies.forEach((movie) => {
-      const { id, inCinemas } = movie;
+      const { id, inCinemas, trailer } = movie;
       const prevMovie = parsedMovies[id] ? parsedMovies[id] : { inCinemas: [] };
 
       parsedMovies[id] = {
         ...prevMovie,
         ...movie,
+        trailer: prevMovie.trailer || trailer,
         inCinemas: [...new Set([...prevMovie.inCinemas, ...inCinemas])],
       };
     });

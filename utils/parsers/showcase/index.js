@@ -76,7 +76,13 @@ export const scrapShowcaseMoviesAndShows = async (html) => {
       const description = $('.movie-description')
         .text()
         .trim();
-      const trailer = $('.jw-video').attr('src');
+
+      const [, trailerJw] = (data.match(/videoId\s=.+/g) || [''])[0].match(/\w+/g) || ['', ''];
+      const [, trailerYt] = (data.match(/videoId:\s.+/g) || [''])[0].match(/\w+/g) || ['', ''];
+      const trailer = {
+        href: trailerJw ? `https://content.jwplatform.com/videos/${trailerJw}.mp4` : trailerYt,
+        type: trailerJw ? 'file' : 'youtube',
+      };
 
       const rawCast = $('.person-container')
         .map((_, element) => {

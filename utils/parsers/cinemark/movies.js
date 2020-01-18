@@ -26,6 +26,7 @@ const parseMoviesAndShows = (movies) => {
         duration,
         urlPoster,
         urlTrailerAmazon,
+        urlTrailerYoutube,
         personList,
         cinemaList,
         attributeList,
@@ -43,9 +44,11 @@ const parseMoviesAndShows = (movies) => {
       const isPremiere = attributeList.includes(0) ? 'Estreno' : '';
       const tags = [isPremiere].filter(Boolean);
 
-      const trailer = urlTrailerAmazon
+      const fileTrailer = urlTrailerAmazon
         .replace('http://www.dropbox.com', 'https://dl.dropboxusercontent.com')
         .replace('https://www.dropbox.com', 'https://dl.dropboxusercontent.com');
+      const [, youtubeTrailer] = urlTrailerYoutube.split('.be/');
+      const trailer = { href: fileTrailer || youtubeTrailer, type: fileTrailer ? 'file' : 'youtube' };
 
       const slug = createSlug(title);
       const cast = parseCast(personList, cinemarkCastTypes.director, cinemarkCastTypes.actor);

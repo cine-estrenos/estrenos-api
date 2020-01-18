@@ -13,6 +13,11 @@ export default gql`
     emoji: String!
   }
 
+  type Trailer {
+    href: String
+    type: String
+  }
+
   type Movie {
     id: String!
     imdbId: String
@@ -28,7 +33,7 @@ export default gql`
     tags: [String]!
     inCinemas: [String]!
     description: String!
-    trailer: String
+    trailer: Trailer!
   }
 
   extend type Query {
