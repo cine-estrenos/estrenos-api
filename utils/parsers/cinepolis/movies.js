@@ -6,6 +6,7 @@ import titleize from 'titleize';
 import camelcaseKeys from 'camelcase-keys';
 
 // Lib
+import emojifier from '../../lib/emojis';
 import { createUniqueId } from '../../lib/movies';
 
 const versions = {
@@ -14,21 +15,52 @@ const versions = {
 };
 
 const getCinepolisMoviesAndShows = async (movies) => {
+  // Get upcoming releases (to use genres key)
+  const response = await fetch('https://www.cinepolis.com.ar/api/upcoming-releases?limit=100');
+  const upcomingReleases = await response.json();
+
   // Get movies basic info
-  const parsedMovies = movies.map(({ id, slug, titleTranslated, posterUrl }) => ({
-    id,
-    slug,
-    poster: posterUrl,
-    title: titleTranslated,
-  }));
+  const parsedMovies = movies.map(({ id, slug, titleTranslated, posterUrl }) => {
+    const release = upcomingReleases.find((upcomingRelease) => upcomingRelease.id === id);
+    const genres = release ? release.genres.map(({ name }) => ({ value: name, emoji: emojifier(name) })) : [];
+
+    return {
+      id,
+      slug,
+      genres,
+      poster: posterUrl,
+      title: titleTranslated,
+      trailer: { href: '', type: '' },
+    };
+  });
+
+  // Add cast
+  const moviesWithCast = await Promise.all(
+    parsedMovies.map(async (movie) => {
+      const response = await fetch(`https://www.cinepolis.com.ar/api/movies/${movie.id}`);
+      const data = await response.json();
+
+      const parsedData = camelcaseKeys(data, { deep: true });
+      const { cast: actors, director, overview: description, parentalGuide, runtime, tmdbId } = parsedData;
+
+      const cast = {
+        actors: actors.split(', '),
+        directors: director.split(', '),
+      };
+      const minAge = parentalGuide || '';
+      const length = runtime || 0;
+
+      return { ...movie, cast, description, minAge, length, tmdbId };
+    }),
+  );
 
   // Add inCinemas key
   const moviesWithCinemasIds = await Promise.all(
-    parsedMovies.map(async (movie) => {
+    moviesWithCast.map(async (movie) => {
       const response = await fetch(`https://www.cinepolis.com.ar/api/movies/${movie.id}/aggregations`);
-      const { complex } = await response.json();
+      const { complex, formats: tags } = await response.json();
 
-      return { ...movie, id: createUniqueId(movie.title), inCinemas: complex.map(String) };
+      return { ...movie, tags, id: createUniqueId(movie.title), inCinemas: complex.map(String) };
     }),
   );
 

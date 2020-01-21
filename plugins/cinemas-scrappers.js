@@ -12,14 +12,28 @@ const mergeChainsMovies = (chainsMovies) => {
 
   chainsMovies.forEach((chainMovies) => {
     chainMovies.forEach((movie) => {
-      const { id, inCinemas, trailer } = movie;
-      const prevMovie = parsedMovies[id] ? parsedMovies[id] : { inCinemas: [] };
+      const { id, inCinemas, trailer, tags, cast, length, minAge } = movie;
+      const prevMovie = parsedMovies[id]
+        ? parsedMovies[id]
+        : { inCinemas: [], tags: ['2D'], cast: { actors: [], directors: [] } };
+
+      const hasPrevActors = prevMovie.cast && prevMovie.cast.actors && prevMovie.cast.actors.length;
+      const hasPrevDirectors = prevMovie.cast && prevMovie.cast.directors && prevMovie.cast.directors.length;
+
+      const parseCast = (casting) => casting.map((name) => name.replace(/\s{2,}/g, ' '));
 
       parsedMovies[id] = {
         ...prevMovie,
         ...movie,
+        cast: {
+          actors: parseCast(hasPrevActors ? prevMovie.cast.actors : cast.actors),
+          directors: parseCast(hasPrevDirectors ? prevMovie.cast.directors : cast.directors),
+        },
+        minAge: prevMovie.minAge || minAge,
+        length: prevMovie.length || length,
         trailer: prevMovie.trailer || trailer,
-        inCinemas: [...new Set([...prevMovie.inCinemas, ...inCinemas])],
+        tags: [...new Set([...prevMovie.tags, ...tags])],
+        inCinemas: [...new Set([...prevMovie.inCinemas, ...inCinemas])].sort((a, b) => a - b),
       };
     });
   });
@@ -51,7 +65,7 @@ export default fp(function cinemasScrappersCron(fastify, opts, next) {
     if (cinepolisError) fastify.log.error(cinepolisError);
 
     // Merge all chain movies
-    const chainsMovies = [cinemarkData.movies, showcaseData.movies, cinepolisData.movies];
+    const chainsMovies = [showcaseData.movies, cinemarkData.movies, cinepolisData.movies];
     const mergedMovies = mergeChainsMovies(chainsMovies);
 
     // Get TMDB info like poster, backdrop, and votes

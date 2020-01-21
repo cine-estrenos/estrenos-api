@@ -10,7 +10,6 @@ export default gql`
 
   type Show {
     id: String!
-    isSellAvailable: Boolean
     cinemaId: String!
     format: String!
     version: String!
