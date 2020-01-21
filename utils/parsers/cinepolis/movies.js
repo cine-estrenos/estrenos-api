@@ -61,6 +61,11 @@ const getCinepolisMoviesAndShows = async (movies) => {
               const [date, time] = show.startsAt.split(' ');
               const [cinemaCode, sessionId] = show.externalId.split('-');
 
+              const seats = {
+                totalSeats: show.seats,
+                availableSeats: show.seatsAvailable,
+              };
+
               return {
                 id: show.showtimeId,
                 time: time.slice(0, 5),
@@ -69,8 +74,7 @@ const getCinepolisMoviesAndShows = async (movies) => {
                 version: versions[version],
                 cinemaId: String(show.complexId),
                 date: titleize(dayjs(date).format('dddd D [de] MMMM')),
-                totalSeats: show.seats,
-                availableSeats: show.seatsAvailable,
+                seats,
               };
             });
           });
