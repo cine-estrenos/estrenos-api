@@ -1,3 +1,5 @@
+import clean from 'get-clean-string';
+
 const emojisGenres = {
   Drama: '🎭',
   Acción: '🔫',
@@ -5,10 +7,9 @@ const emojisGenres = {
   Terror: '☠️',
   Misterio: '👻',
   Romance: '❤️',
-  Thriller: '😱',
-  Suspense: '😱',
+  Thriller: '🧟‍♂️',
+  Suspenso: '😱',
   Animación: '🦄',
-  Aventuras: '🤠',
   Aventura: '🤠',
   Western: '🤠',
   Biografia: '✍️',
@@ -18,11 +19,8 @@ const emojisGenres = {
   Fantasía: '🌈',
   Festival: '🎪',
   Familiar: '👪',
-  Familia: '👪',
   Musical: '🎵',
-  Música: '🎵',
   'Ciencia Ficción': '👽',
-  'Ciencia ficción': '👽',
   Infantil: '👶',
   Historia: '🗿',
   Documental: '🗺️',
@@ -30,7 +28,14 @@ const emojisGenres = {
 };
 
 const emojifier = (genre) => {
-  const emojiGenre = emojisGenres[genre];
+  const parsedGenre = clean()(genre);
+
+  const key = Object.keys(emojisGenres).find((emojiGenre) => {
+    const parsedEmojiGenre = clean()(emojiGenre.slice(0, 3));
+    return parsedGenre.includes(parsedEmojiGenre);
+  });
+
+  const emojiGenre = emojisGenres[key];
   if (!emojiGenre) console.log(`Emoji for genre ${genre} not found`); // eslint-disable-line no-console
 
   return emojiGenre || '';
