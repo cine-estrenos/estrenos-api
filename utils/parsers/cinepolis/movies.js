@@ -94,8 +94,8 @@ const getCinepolisMoviesAndShows = async (movies) => {
               const [cinemaCode, sessionId] = show.externalId.split('-');
 
               const seats = {
-                totalSeats: show.seats,
-                availableSeats: show.seatsAvailable,
+                total: show.seats,
+                available: show.seatsAvailable,
               };
 
               return {

@@ -4,8 +4,8 @@ const { gql } = ApolloServerFastify;
 
 export default gql`
   type Seats {
-    totalSeats: Int!
-    availableSeats: Int!
+    total: Int!
+    available: Int!
   }
 
   type Show {
