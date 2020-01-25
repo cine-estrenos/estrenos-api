@@ -1,5 +1,7 @@
+import dayjs from 'dayjs';
 import dotenv from 'dotenv';
 import Sentry from '@sentry/node';
+import 'dayjs/locale/es';
 
 // Client
 import client from './client';
@@ -12,6 +14,9 @@ import cinemasScrappersCron from './plugins/cinemas-scrappers';
 import getCinemasController from './rest/controllers/cinemas';
 import { getMovieByIdController, getMoviesController } from './rest/controllers/movies';
 import { getShowsByMovieIdController, getShowsByMovieIdAndCinemaIdController } from './rest/controllers/shows';
+
+// Setup dayjs locale
+dayjs.locale('es');
 
 // Load env variables
 if (process.env.NODE_ENV === 'development') dotenv.config();

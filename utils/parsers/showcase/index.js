@@ -129,9 +129,6 @@ export const scrapShowcaseMoviesAndShows = async (html) => {
           const cinemas = $('.accordion')
             .map((_, element) => {
               const $times = $(element).find('.time');
-              const isSellAvailable = $(element)
-                .find('.times__text')
-                .hasClass('times__text--on');
               const cinema = $(element)
                 .find('.accordion__title')
                 .text()
@@ -164,7 +161,6 @@ export const scrapShowcaseMoviesAndShows = async (html) => {
                         link,
                         format,
                         version,
-                        isSellAvailable,
                         cinemaId: getCinemaId(cinema),
                         date: titleize(dayjs(rawDate).format('dddd D [de] MMMM')),
                       };
