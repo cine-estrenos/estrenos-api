@@ -15,7 +15,7 @@ const parseShows = (movieList) => {
         version: titleize(version),
         format: format.toUpperCase(),
         time: dayjs(timestamp).format('HH[:]mm'),
-        date: titleize(dayjs(timestamp).format('dddd D [de] MMMM')),
+        date: dayjs(timestamp).format('YYYY-MM-DD'),
         link: createTicketsLink(cinemaId, sessionId, featureId),
       }));
 

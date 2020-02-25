@@ -2,9 +2,11 @@ import clean from 'get-clean-string';
 
 const emojisGenres = {
   Drama: '🎭',
+  Guerra: '🔫',
   Acción: '🔫',
   Bélica: '🔫',
   Terror: '☠️',
+  Horror: '☠️',
   Misterio: '👻',
   Romance: '❤️',
   Thriller: '🧟‍♂️',

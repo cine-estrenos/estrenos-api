@@ -2,7 +2,6 @@
 
 import dayjs from 'dayjs';
 import fetch from 'node-fetch';
-import titleize from 'titleize';
 import camelcaseKeys from 'camelcase-keys';
 
 // Lib
@@ -44,8 +43,8 @@ const getCinepolisMoviesAndShows = async (movies) => {
       const { cast: actors, director, overview: description, parentalGuide, runtime, tmdbId } = parsedData;
 
       const cast = {
-        actors: actors.split(', '),
-        directors: director.split(', '),
+        actors: (actors || '').split(', '),
+        directors: (director || '').split(', '),
       };
       const minAge = parentalGuide || '';
       const length = runtime || 0;
@@ -99,14 +98,14 @@ const getCinepolisMoviesAndShows = async (movies) => {
               };
 
               return {
+                seats,
+                format,
                 id: show.showtimeId,
                 time: time.slice(0, 5),
-                link: `https://tickets.cinepolis.com.ar/ticketing/visSelectTickets.aspx?cinemacode=${cinemaCode}&txtSessionId=${sessionId}`,
-                format,
                 version: versions[version],
                 cinemaId: String(show.complexId),
-                date: titleize(dayjs(date).format('dddd D [de] MMMM')),
-                seats,
+                date: dayjs(date).format('YYYY-MM-DD'),
+                link: `https://tickets.cinepolis.com.ar/ticketing/visSelectTickets.aspx?cinemacode=${cinemaCode}&txtSessionId=${sessionId}`,
               };
             });
           });

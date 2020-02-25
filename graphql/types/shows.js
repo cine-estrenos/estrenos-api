@@ -13,9 +13,8 @@ export default gql`
     cinemaId: String!
     format: String!
     version: String!
-    timestamp: String!
-    time: String!
     date: String!
+    time: String!
     link: String!
     seats: Seats
   }

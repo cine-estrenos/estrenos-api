@@ -162,7 +162,7 @@ export const scrapShowcaseMoviesAndShows = async (html) => {
                         format,
                         version,
                         cinemaId: getCinemaId(cinema),
-                        date: titleize(dayjs(rawDate).format('dddd D [de] MMMM')),
+                        date: dayjs(rawDate).format('YYYY-MM-DD'),
                       };
                     })
                     .get();
