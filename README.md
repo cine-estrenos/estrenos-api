@@ -54,9 +54,15 @@ git push origin some-branch --no-verify
 
 Anyways, is not recommended to bypass the git hooks just because you can, they are here to protect us from non-intentional mistakes at pushing non-working code
 
-## Mock
+## Diagrams
 
-A mock response with the JSON from Cinemark http://cinemark-data.free.beeceptor.com
+#### Flow
+
+![flow](/docs/flow.png)
+
+#### Database
+
+![db](/docs/db.png)
 
 ## Contributors ✨
 
