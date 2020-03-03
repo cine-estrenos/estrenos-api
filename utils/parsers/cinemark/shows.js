@@ -10,6 +10,7 @@ const parseShows = (movieList) => {
   const showsParsed = movieList.map(({ format, version, cinemaList }) => {
     const cinemaWithShows = cinemaList.map(({ id: cinemaId, sessionList }) => {
       const shows = sessionList.map(({ id: sessionId, feature: featureId, dtm: timestamp }) => ({
+        seats: null,
         id: sessionId,
         cinemaId: String(cinemaId),
         version: titleize(version),

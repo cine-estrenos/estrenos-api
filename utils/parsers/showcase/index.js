@@ -161,6 +161,7 @@ export const scrapShowcaseMoviesAndShows = async (html) => {
                         link,
                         format,
                         version,
+                        seats: null,
                         cinemaId: getCinemaId(cinema),
                         date: dayjs(rawDate).format('YYYY-MM-DD'),
                       };
