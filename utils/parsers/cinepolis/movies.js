@@ -6,7 +6,7 @@ import camelcaseKeys from 'camelcase-keys';
 
 // Lib
 import emojifier from '../../lib/emojis';
-import { createUniqueId } from '../../lib/movies';
+import { createUniqueId, parseLength } from '../../lib/movies';
 
 const versions = {
   CAST: 'Castellano',
@@ -47,7 +47,7 @@ const getCinepolisMoviesAndShows = async (movies) => {
         directors: (director || '').split(', '),
       };
       const minAge = parentalGuide || '';
-      const length = runtime || 0;
+      const length = parseLength(runtime);
 
       return { ...movie, cast, description, minAge, length, tmdbId };
     }),
