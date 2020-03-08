@@ -134,7 +134,8 @@ export const scrapShowcaseMoviesAndShows = async (html) => {
                 .text()
                 .trim();
 
-              inCinemasSet.add(getCinemaId(cinema));
+              const cinemaId = getCinemaId(cinema);
+              inCinemasSet.add(cinemaId);
 
               const times = $times
                 .map((index, element) => {

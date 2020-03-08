@@ -7,6 +7,8 @@ export default gql`
     id: String!
     name: String!
     chain: String!
+    lat: Int!
+    lon: Int!
   }
 
   extend type Query {
