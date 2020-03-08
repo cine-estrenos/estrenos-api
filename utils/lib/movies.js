@@ -16,6 +16,8 @@ export const parseCast = (cast, actorType, directorType) => {
 };
 
 export const parseLength = (length) => {
+  if (!length) return '';
+
   const hours = length / 60;
   const rawHours = Math.floor(hours);
 
