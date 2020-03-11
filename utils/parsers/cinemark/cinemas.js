@@ -22,10 +22,12 @@ const parseCinemaName = (name = '') => {
 
 const parseCinemas = (cinemas) => {
   const parsedCinemas = cinemas.map((cinema) => {
-    const { id, name } = cinema;
+    const { id, name, decLatitude, decLongitude } = cinema;
 
     return {
       id: String(id),
+      lat: Number(decLatitude),
+      lon: Number(decLongitude),
       name: parseCinemaName(name),
       chain: getCinemaChain(name),
     };
