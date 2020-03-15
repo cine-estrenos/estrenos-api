@@ -69,7 +69,7 @@ const getCinepolisMoviesAndShows = async (movies) => {
       const response = await fetch(`https://www.cinepolis.com.ar/api/movies/${movie.id}/aggregations`);
       const { dates } = await response.json();
 
-      return dates.map((date) => ({ id: movie.id, uniqueId: createUniqueId(movie.title), date }));
+      return dates.map((date) => ({ id: String(movie.id), uniqueId: createUniqueId(movie.title), date }));
     }),
   ).then((dates) => dates.flat());
 
@@ -100,9 +100,9 @@ const getCinepolisMoviesAndShows = async (movies) => {
               return {
                 seats,
                 format,
-                id: show.showtimeId,
                 time: time.slice(0, 5),
                 version: versions[version],
+                id: String(show.showtimeId),
                 cinemaId: String(show.complexId),
                 date: dayjs(date).format('YYYY-MM-DD'),
                 link: `https://tickets.cinepolis.com.ar/ticketing/visSelectTickets.aspx?cinemacode=${cinemaCode}&txtSessionId=${sessionId}`,

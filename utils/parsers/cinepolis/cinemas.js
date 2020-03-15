@@ -47,9 +47,9 @@ const parseCinepolisCinemas = (cinemas) => {
     const location = CINEMAS_LOCATIONS[id];
 
     return {
-      id,
       name,
       chain,
+      id: String(id),
       ...location,
     };
   });
