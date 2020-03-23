@@ -63,7 +63,7 @@
     "husky": "^4.2.3",
     "jest": "^25.1.0",
     "nodemon": "^2.0.2",
-    "prettier": "^1.19.1"
+    "prettier": "^2.0.1"
   },
   "scripts": {
     "start": "node --experimental-modules --es-module-specifier-resolution=node server.js",
