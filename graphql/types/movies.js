@@ -33,6 +33,7 @@ export default gql`
     inCinemas: [String]!
     description: String!
     trailer: Trailer!
+    imdbId: String
   }
 
   extend type Query {

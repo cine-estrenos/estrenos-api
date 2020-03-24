@@ -1,3 +1,4 @@
+import R from 'ramda';
 import fetch from 'node-fetch';
 import camelcaseKeys from 'camelcase-keys';
 
@@ -34,9 +35,7 @@ const getImdbInfo = async (title, tmdbId, genres) => {
     if (parsedData.totalResults === 0) return { votes: '0', backdrop: '' };
 
     const [movie] = data.results;
-    const { id, voteAverage: votes, posterPath, backdropPath } = camelcaseKeys(movie, {
-      deep: true,
-    });
+    const { id, voteAverage: votes, posterPath, backdropPath, imdbId } = camelcaseKeys(movie, { deep: true });
 
     const baseImageUrl = 'https://image.tmdb.org/t/p';
     const withWidth = (width) => `w${width}`;
@@ -56,7 +55,7 @@ const getImdbInfo = async (title, tmdbId, genres) => {
     const length = `${runtime}m`;
     const parsedGenres = movieGenres.map(({ id: genreId }) => genres[genreId]);
 
-    return { votes: votesParsed, poster, backdrop, length, description, title: newTitle, genres: parsedGenres }; // eslint-disable-line
+    return { poster, backdrop, length, description, imdbId, votes: votesParsed, title: newTitle, genres: parsedGenres }; // eslint-disable-line
   }
 
   const detailsEndpoint = `${baseUrl}/movie/${tmdbId}?api_key=${apiKey}&language=es-AR`;
@@ -72,9 +71,8 @@ const getImdbInfo = async (title, tmdbId, genres) => {
     voteAverage: votes,
     backdropPath,
     posterPath,
-  } = camelcaseKeys(movieDetails, {
-    deep: true,
-  });
+    imdbId,
+  } = camelcaseKeys(movieDetails, { deep: true });
 
   const baseImageUrl = 'https://image.tmdb.org/t/p';
   const withWidth = (width) => `w${width}`;
@@ -86,7 +84,7 @@ const getImdbInfo = async (title, tmdbId, genres) => {
   const length = `${runtime}m`;
   const parsedGenres = movieGenres.map(({ id: genreId }) => genres[genreId]);
 
-  return { votes: votesParsed, poster, backdrop, length, description,  title: newTitle, genres: parsedGenres }; // eslint-disable-line
+  return { poster, backdrop, length, description, imdbId, votes: votesParsed, title: newTitle, genres: parsedGenres }; // eslint-disable-line
 };
 
 // Get new high quality posters and more info
@@ -97,9 +95,13 @@ const getMoviesWithTmdbInfo = async (data) => {
     data.map(async (movie) => {
       try {
         const imdbInfo = await getImdbInfo(movie.title, movie.tmdbId, genres);
-        return { ...movie, ...imdbInfo };
+        const parsedMovie = R.omit(['tmdbId'], movie);
+
+        return { ...parsedMovie, ...imdbInfo };
       } catch (error) {
-        return { ...movie, votes: '0', backdrop: '' };
+        const parsedMovie = R.omit(['tmdbId'], movie);
+
+        return { ...parsedMovie, votes: '0', backdrop: '' };
       }
     }),
   );
