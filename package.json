@@ -33,7 +33,7 @@
     "fastify-cors": "^3.0.2",
     "fastify-helmet": "^3.0.2",
     "fastify-plugin": "^1.6.1",
-    "fastify-rate-limit": "^3.0.1",
+    "fastify-rate-limit": "^4.1.0",
     "fastify-redis": "^3.1.1",
     "get-clean-string": "^2.2.0",
     "graphql": "^15.0.0",
